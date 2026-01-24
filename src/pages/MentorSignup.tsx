@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ArrowLeft, Building2, AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { SchoolCombobox } from "@/components/corporate/SchoolCombobox";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
@@ -19,6 +20,7 @@ const signupSchema = z
     email: z.string().trim().email({ message: "Please enter a valid email address" }),
     company: z.string().trim().min(1, { message: "Company name is required" }).max(200),
     job_title: z.string().trim().min(1, { message: "Job title is required" }).max(200),
+    school_name: z.string().optional(),
     background_info: z
       .string()
       .trim()
@@ -42,6 +44,12 @@ const signupSchema = z
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
+interface SelectedSchool {
+  id: string;
+  name: string;
+  type: "registered" | "pending" | "new";
+}
+
 export default function MentorSignup() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -59,11 +67,13 @@ export default function MentorSignup() {
     email: "",
     company: "",
     job_title: "",
+    school_name: "",
     background_info: "",
     password: "",
     confirm_password: "",
     agree_terms: false,
   });
+  const [selectedSchool, setSelectedSchool] = useState<SelectedSchool | null>(null);
 
   // Validate corporate invitation on load
   useEffect(() => {
@@ -159,7 +169,36 @@ export default function MentorSignup() {
         throw new Error("Failed to set up account role");
       }
 
-      // 3. Create mentor profile linked to user AND corporate
+      // 3. Handle school selection - create pending school if new
+      let schoolId: string | null = null;
+      let pendingSchoolId: string | null = null;
+
+      if (selectedSchool) {
+        if (selectedSchool.type === "registered") {
+          schoolId = selectedSchool.id;
+        } else if (selectedSchool.type === "pending") {
+          pendingSchoolId = selectedSchool.id;
+        } else if (selectedSchool.type === "new") {
+          // Create a new pending school
+          const { data: newPendingSchool, error: pendingError } = await supabase
+            .from("pending_schools")
+            .insert({
+              school_name: selectedSchool.name,
+              corporate_id: corporateId,
+            })
+            .select("id")
+            .single();
+
+          if (pendingError) {
+            console.error("Error creating pending school:", pendingError);
+            // Don't fail the whole signup for this
+          } else {
+            pendingSchoolId = newPendingSchool.id;
+          }
+        }
+      }
+
+      // 4. Create mentor profile linked to user, corporate, and optionally school
       const { error: profileError } = await supabase.from("mentor_profiles").insert({
         user_id: authData.user.id,
         corporate_id: corporateId,
@@ -167,6 +206,8 @@ export default function MentorSignup() {
         company: formData.company,
         job_title: formData.job_title,
         background_info: formData.background_info,
+        school_id: schoolId,
+        pending_school_id: pendingSchoolId,
       });
 
       if (profileError) {
@@ -429,7 +470,25 @@ export default function MentorSignup() {
                       </div>
                     </div>
 
-                    {/* Background Info */}
+                    {/* School Selection */}
+                    <div className="space-y-2">
+                      <Label>
+                        Associated School <span className="text-muted-foreground text-xs">(optional)</span>
+                      </Label>
+                      <SchoolCombobox
+                        corporateId={corporateId || ""}
+                        value={selectedSchool?.name || ""}
+                        onSelect={(school) => {
+                          setSelectedSchool(school);
+                          handleInputChange("school_name", school?.name || "");
+                        }}
+                        disabled={isLoading}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Select an existing school or add a new one if not listed
+                      </p>
+                    </div>
+
                     <div className="space-y-2">
                       <Label htmlFor="background_info">
                         Brief Background (for matching) <span className="text-destructive">*</span>

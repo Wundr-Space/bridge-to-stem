@@ -14,7 +14,7 @@ const corsHeaders = {
 const BASE_URL = "https://bridge-to-stem.lovable.app";
 
 interface EmailRequest {
-  type: "corporate_welcome" | "mentor_welcome" | "school_welcome" | "new_signup_notification";
+  type: "corporate_welcome" | "mentor_welcome" | "school_welcome" | "new_signup_notification" | "school_invite";
   email: string;
   data: {
     companyName?: string;
@@ -23,6 +23,7 @@ interface EmailRequest {
     schoolName?: string;
     signupType?: "mentor" | "school";
     entityName?: string;
+    inviteLink?: string;
   };
 }
 
@@ -281,6 +282,72 @@ function getNewSignupNotificationEmail(signupType: string, entityName: string) {
   };
 }
 
+function getSchoolInviteEmail(schoolName: string, inviteLink: string) {
+  return {
+    subject: "Invitation to Join Gen-Connect as a Partner School",
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Invitation - Gen-Connect</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+    <tr>
+      <td style="background: linear-gradient(135deg, #1B4D3E 0%, #2A5F4F 100%); padding: 32px; border-radius: 16px 16px 0 0; text-align: center;">
+        <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">Gen-Connect</h1>
+        <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0; font-size: 14px;">Bridge to STEM Mentorship</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background: white; padding: 40px 32px; border-radius: 0 0 16px 16px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="display: inline-block; background: #e6f4f1; color: #1B4D3E; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600;">
+            Invitation
+          </div>
+        </div>
+        
+        <h2 style="color: #1B4D3E; margin: 0 0 16px 0; font-size: 24px; text-align: center;">
+          You're Invited to Join!
+        </h2>
+        
+        <p style="color: #4a5568; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0; text-align: center;">
+          <strong>${schoolName}</strong> has been nominated to join our STEM mentorship program.
+        </p>
+        
+        <p style="color: #4a5568; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0; text-align: center;">
+          Complete your registration to give your students access to industry mentors and work experience opportunities.
+        </p>
+        
+        <div style="text-align: center; margin: 32px 0;">
+          <a href="${inviteLink}" style="display: inline-block; background: linear-gradient(135deg, #1B4D3E 0%, #2A5F4F 100%); color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;">
+            Complete Registration
+          </a>
+        </div>
+        
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 32px 0;">
+        
+        <p style="color: #718096; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;">
+          This program is fully funded by corporate partners at no cost to your school.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 24px; text-align: center;">
+        <p style="color: #a0aec0; font-size: 12px; margin: 0;">
+          © ${new Date().getFullYear()} Gen-Connect. All rights reserved.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `,
+  };
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -314,6 +381,13 @@ const handler = async (req: Request): Promise<Response> => {
           throw new Error("Missing schoolName for school welcome email");
         }
         emailContent = getSchoolWelcomeEmail(data.schoolName);
+        break;
+
+      case "school_invite":
+        if (!data.schoolName || !data.inviteLink) {
+          throw new Error("Missing schoolName or inviteLink for school invite email");
+        }
+        emailContent = getSchoolInviteEmail(data.schoolName, data.inviteLink);
         break;
 
       case "new_signup_notification":
