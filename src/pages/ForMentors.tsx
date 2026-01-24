@@ -4,6 +4,8 @@ import { MentorHero } from "@/components/mentors/MentorHero";
 import { WhyMentor } from "@/components/mentors/WhyMentor";
 import { MentorProcess } from "@/components/mentors/MentorProcess";
 import { MentorBenefits } from "@/components/mentors/MentorBenefits";
+import { MentorStories } from "@/components/mentors/MentorStories";
+import { MentorForm } from "@/components/forms/MentorForm";
 
 export default function ForMentors() {
   const scrollToSignup = () => {
@@ -32,32 +34,26 @@ export default function ForMentors() {
 
       {/* What You Get - Benefits */}
       <MentorBenefits />
-      <section id="mentor-stories" className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Mentor Stories
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Hear from mentors who are making a difference
-            </p>
-            <p className="text-muted-foreground italic">
-              Stories coming soon from our pilot program
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Placeholder for Signup Form */}
+      {/* Mentor Stories */}
+      <MentorStories />
+
+      {/* Registration Form */}
       <section id="mentor-signup" className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Become a Mentor
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Mentor registration form coming soon
-            </p>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Become a Mentor
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Share your story and help students from similar backgrounds see their potential
+              </p>
+            </div>
+            
+            <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
+              <MentorForm />
+            </div>
           </div>
         </div>
       </section>
