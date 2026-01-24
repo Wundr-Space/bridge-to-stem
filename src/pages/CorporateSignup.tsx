@@ -137,19 +137,33 @@ export default function CorporateSignup() {
       }
 
       // 3. Create corporate profile
-      const { error: profileError } = await supabase.from("corporate_profiles").insert({
+      const { data: profileData, error: profileError } = await supabase.from("corporate_profiles").insert({
         user_id: authData.user.id,
         company_name: formData.company_name,
         industry: formData.industry,
         company_size: formData.company_size,
-      });
+      }).select("id").single();
 
       if (profileError) {
         console.error("Error creating profile:", profileError);
         throw new Error("Failed to create company profile");
       }
 
-      // 4. Success - redirect to dashboard
+      // 4. Send welcome email (fire and forget)
+      supabase.functions.invoke("send-welcome-email", {
+        body: {
+          type: "corporate_welcome",
+          email: formData.email,
+          data: {
+            companyName: formData.company_name,
+            corporateId: profileData.id,
+          },
+        },
+      }).then(({ error }) => {
+        if (error) console.error("Error sending welcome email:", error);
+      });
+
+      // 5. Success - redirect to dashboard
       toast({
         title: "Account Created!",
         description: `Welcome to Gen-Connect, ${formData.company_name}!`,

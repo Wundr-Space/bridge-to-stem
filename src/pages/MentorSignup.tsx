@@ -174,7 +174,35 @@ export default function MentorSignup() {
         throw new Error("Failed to create mentor profile");
       }
 
-      // 4. Success - redirect to dashboard
+      // 4. Send welcome email (fire and forget)
+      supabase.functions.invoke("send-welcome-email", {
+        body: {
+          type: "mentor_welcome",
+          email: formData.email,
+          data: { mentorName: formData.full_name },
+        },
+      }).then(({ error }) => {
+        if (error) console.error("Error sending welcome email:", error);
+      });
+
+      // 5. Notify corporate about new signup (fire and forget)
+      if (corporateId) {
+        supabase.functions.invoke("send-welcome-email", {
+          body: {
+            type: "new_signup_notification",
+            email: "", // Will be fetched by edge function
+            data: {
+              signupType: "mentor",
+              entityName: formData.full_name,
+              corporateId: corporateId,
+            },
+          },
+        }).then(({ error }) => {
+          if (error) console.error("Error sending notification:", error);
+        });
+      }
+
+      // 6. Success - redirect to dashboard
       toast({
         title: "Account Created!",
         description: `Welcome to Gen-Connect, ${formData.full_name}!`,
