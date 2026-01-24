@@ -1,7 +1,12 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowRight, X, Check, Building2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Download, ArrowRight, X, Check, Building2, 
+  BarChart3, Users, ShieldCheck, 
+  Handshake, UserCheck, Settings, Briefcase, FileText 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
@@ -51,6 +56,93 @@ const stats = [
   { value: 65, suffix: "%", label: "STEM workforce = White men", isProblem: true },
   { value: 9, suffix: "%", label: "Low SES backgrounds in tech", isProblem: true },
   { value: 16.9, suffix: "%", label: "Women in engineering/tech roles", isProblem: true }
+];
+
+const benefits = [
+  {
+    icon: BarChart3,
+    title: "Measurable Impact",
+    items: [
+      "ESG/D&I reporting metrics",
+      "Track student career pathway changes",
+      "Quantify social mobility ROI",
+      "Quarterly impact reports"
+    ]
+  },
+  {
+    icon: Users,
+    title: "Employee Engagement",
+    items: [
+      "Activate ERG members meaningfully",
+      "Company-sanctioned volunteering",
+      "Purpose-driven work opportunities",
+      "Boost retention through impact"
+    ]
+  },
+  {
+    icon: ShieldCheck,
+    title: "Zero Operational Burden",
+    items: [
+      "We handle DBS checks",
+      "Safeguarding compliance managed",
+      "Insurance coverage provided",
+      "Full placement coordination"
+    ]
+  }
+];
+
+const processSteps = [
+  {
+    icon: Handshake,
+    title: "Partner & Onboard",
+    timeline: "Month 1",
+    items: [
+      "Sign partnership agreement",
+      "We survey ERG members for mentor interest",
+      "Define success metrics together"
+    ]
+  },
+  {
+    icon: UserCheck,
+    title: "Identify Mentors",
+    timeline: "Month 1-2",
+    items: [
+      "Diverse employees opt-in",
+      "We conduct DBS checks",
+      "Match to students from similar backgrounds"
+    ]
+  },
+  {
+    icon: Settings,
+    title: "We Handle Logistics",
+    timeline: "Month 2-3",
+    items: [
+      "Platform training for mentors",
+      "School coordination",
+      "Insurance and compliance"
+    ]
+  },
+  {
+    icon: Briefcase,
+    title: "Placements Happen",
+    timeline: "Ongoing",
+    items: [
+      "2-week student work experience",
+      "Structured mentor support",
+      "Safe, supervised environment"
+    ]
+  },
+  {
+    icon: FileText,
+    title: "Measure & Report",
+    timeline: "Quarterly",
+    items: [
+      "Pre/post student surveys",
+      "Career pathway tracking",
+      "ESG/D&I impact reports",
+      "ROI on CSR investment"
+    ]
+  }
 ];
 
 function StatCard({ stat }: { stat: typeof stats[0] }) {
@@ -190,6 +282,118 @@ const ForCorporates = () => {
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section - What You Get */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              What You Get
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              A complete solution for authentic social mobility impact
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {benefits.map((benefit, index) => {
+              const Icon = benefit.icon;
+              return (
+                <Card key={index} className="border-border/50 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-8">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6">
+                      <Icon className="w-7 h-7 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-4">
+                      {benefit.title}
+                    </h3>
+                    <ul className="space-y-3">
+                      {benefit.items.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works - Corporate Perspective */}
+      <section className="py-20 md:py-28 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              How It Works
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              A structured process from partnership to measurable impact
+            </p>
+          </div>
+
+          {/* Timeline */}
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              {/* Vertical Line (desktop) */}
+              <div className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary opacity-30" />
+
+              <div className="space-y-8">
+                {processSteps.map((step, index) => {
+                  const Icon = step.icon;
+                  return (
+                    <div key={index} className="relative flex gap-6 md:gap-8">
+                      {/* Icon Circle */}
+                      <div className="relative z-10 flex-shrink-0">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                          <Icon className="w-8 h-8 text-primary-foreground" />
+                        </div>
+                        {/* Step Number */}
+                        <span className="absolute -top-2 -right-2 w-6 h-6 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center">
+                          {index + 1}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 bg-card rounded-xl border border-border/50 p-6">
+                        <div className="flex flex-wrap items-center gap-3 mb-3">
+                          <h3 className="text-lg font-semibold text-foreground">
+                            {step.title}
+                          </h3>
+                          <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                            {step.timeline}
+                          </span>
+                        </div>
+                        <ul className="space-y-2">
+                          {step.items.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center mt-12">
+            <Button size="lg" variant="brand" className="text-base" asChild>
+              <Link to="/contact?type=corporate">
+                Start Your Partnership Journey
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
