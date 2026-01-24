@@ -489,7 +489,6 @@ export default function CorporateDashboard() {
                         <TableRow>
                           <TableHead>Name</TableHead>
                           <TableHead>Job Title</TableHead>
-                          <TableHead>Company</TableHead>
                           <TableHead>School</TableHead>
                           <TableHead>Joined</TableHead>
                           <TableHead className="w-[80px]">Actions</TableHead>
@@ -500,7 +499,6 @@ export default function CorporateDashboard() {
                           <TableRow key={mentor.id}>
                             <TableCell className="font-medium">{mentor.full_name}</TableCell>
                             <TableCell>{mentor.job_title || "-"}</TableCell>
-                            <TableCell>{mentor.company || "-"}</TableCell>
                             <TableCell>
                               {mentor.school_name ? (
                                 mentor.school_name

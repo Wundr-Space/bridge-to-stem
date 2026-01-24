@@ -39,37 +39,53 @@ export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }
 
   useEffect(() => {
     fetchSchools();
-  }, [corporateId]);
+  }, []);
 
   const fetchSchools = async () => {
-    if (!corporateId) return;
-    
     setIsLoading(true);
     try {
-      // Fetch registered schools
+      // Fetch ALL registered schools (not filtered by corporate)
       const { data: registeredSchools } = await supabase
         .from("school_profiles")
-        .select("id, school_name")
-        .eq("corporate_id", corporateId);
+        .select("id, school_name");
 
-      // Fetch pending schools
+      // Fetch ALL pending schools (not filtered by corporate)
       const { data: pendingSchools } = await supabase
         .from("pending_schools")
-        .select("id, school_name")
-        .eq("corporate_id", corporateId);
+        .select("id, school_name");
 
-      const allSchools: SchoolOption[] = [
-        ...(registeredSchools || []).map((s) => ({
-          id: s.id,
-          name: s.school_name,
-          type: "registered" as const,
-        })),
-        ...(pendingSchools || []).map((s) => ({
-          id: s.id,
-          name: s.school_name,
-          type: "pending" as const,
-        })),
-      ];
+      // Deduplicate by school name (case-insensitive)
+      const seenNames = new Set<string>();
+      const allSchools: SchoolOption[] = [];
+
+      // Add registered schools first (they take priority)
+      for (const s of registeredSchools || []) {
+        const nameLower = s.school_name.toLowerCase();
+        if (!seenNames.has(nameLower)) {
+          seenNames.add(nameLower);
+          allSchools.push({
+            id: s.id,
+            name: s.school_name,
+            type: "registered" as const,
+          });
+        }
+      }
+
+      // Add pending schools if name not already seen
+      for (const s of pendingSchools || []) {
+        const nameLower = s.school_name.toLowerCase();
+        if (!seenNames.has(nameLower)) {
+          seenNames.add(nameLower);
+          allSchools.push({
+            id: s.id,
+            name: s.school_name,
+            type: "pending" as const,
+          });
+        }
+      }
+
+      // Sort alphabetically
+      allSchools.sort((a, b) => a.name.localeCompare(b.name));
 
       setSchools(allSchools);
     } catch (error) {
