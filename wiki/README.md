@@ -12,6 +12,7 @@ Welcome to the Gen-Connect knowledge base. This wiki contains foundational docum
 
 ### Fundraising & Pitching
 - **[Pitch Deck](./pitch-deck.md)** - Complete 12-slide startup pitch deck with Gen-Connect content and strategy
+- **[Prezi Build Guide](./prezi-build-guide.md)** - Detailed instructions for creating the pitch deck in Prezi with branding, layouts, and visual specifications
 
 ## 🎯 Purpose
 
