@@ -1,3 +1,4 @@
+import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MentorHero } from "@/components/mentors/MentorHero";
@@ -18,45 +19,52 @@ export default function ForMentors() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Become a STEM Mentor | Give Back to Students Like You"
+        description="Help students from backgrounds like yours see STEM as achievable. Low commitment, high impact mentoring with full company support."
+        keywords="STEM mentor, volunteer mentoring, give back, diversity in tech, role model, social mobility"
+      />
       <Navbar />
       
-      {/* Hero Section */}
-      <MentorHero 
-        onBecomeaMentor={scrollToSignup}
-        onSeeStories={scrollToStories}
-      />
+      <main id="main-content">
+        {/* Hero Section */}
+        <MentorHero 
+          onBecomeaMentor={scrollToSignup}
+          onSeeStories={scrollToStories}
+        />
 
-      {/* Why Mentor Section */}
-      <WhyMentor />
+        {/* Why Mentor Section */}
+        <WhyMentor />
 
-      {/* What's Involved - Process */}
-      <MentorProcess />
+        {/* What's Involved - Process */}
+        <MentorProcess />
 
-      {/* What You Get - Benefits */}
-      <MentorBenefits />
+        {/* What You Get - Benefits */}
+        <MentorBenefits />
 
-      {/* Mentor Stories */}
-      <MentorStories />
+        {/* Mentor Stories */}
+        <MentorStories />
 
-      {/* Registration Form */}
-      <section id="mentor-signup" className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Become a Mentor
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Share your story and help students from similar backgrounds see their potential
-              </p>
-            </div>
-            
-            <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
-              <MentorForm />
+        {/* Registration Form */}
+        <section id="mentor-signup" className="py-16 md:py-24 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  Become a Mentor
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Share your story and help students from similar backgrounds see their potential
+                </p>
+              </div>
+              
+              <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
+                <MentorForm />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

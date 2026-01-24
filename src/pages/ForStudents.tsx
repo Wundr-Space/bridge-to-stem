@@ -1,3 +1,4 @@
+import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { StudentHero } from "@/components/students/StudentHero";
@@ -20,34 +21,41 @@ export default function ForStudents() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="STEM Work Experience | Meet Mentors Like You"
+        description="Get work experience at major tech companies with mentors from similar backgrounds. Free program for students ages 14-18."
+        keywords="STEM work experience, student mentorship, tech careers, free work placement, teen STEM program"
+      />
       <Navbar />
       
-      {/* Hero Section */}
-      <StudentHero 
-        onApply={scrollToApply}
-        onSeeStories={scrollToStories}
-      />
+      <main id="main-content">
+        {/* Hero Section */}
+        <StudentHero 
+          onApply={scrollToApply}
+          onSeeStories={scrollToStories}
+        />
 
-      {/* The Opportunity */}
-      <StudentOpportunity />
+        {/* The Opportunity */}
+        <StudentOpportunity />
 
-      {/* Why This Matters */}
-      <WhyThisMatters />
+        {/* Why This Matters */}
+        <WhyThisMatters />
 
-      {/* What to Expect - Journey */}
-      <StudentJourney />
+        {/* What to Expect - Journey */}
+        <StudentJourney />
 
-      {/* What You'll Do During Placement */}
-      <PlacementActivities />
+        {/* What You'll Do During Placement */}
+        <PlacementActivities />
 
-      {/* Student Stories */}
-      <StudentStories />
+        {/* Student Stories */}
+        <StudentStories />
 
-      {/* FAQ Section */}
-      <StudentFAQ />
+        {/* FAQ Section */}
+        <StudentFAQ />
 
-      {/* Application Form */}
-      <StudentApplicationForm />
+        {/* Application Form */}
+        <StudentApplicationForm />
+      </main>
 
       <Footer />
     </div>
