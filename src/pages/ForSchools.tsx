@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SchoolBenefits } from "@/components/schools/SchoolBenefits";
+import { SchoolProcess } from "@/components/schools/SchoolProcess";
 import { 
   Users, 
   Building2, 
@@ -272,6 +274,12 @@ export default function ForSchools() {
           </div>
         </div>
       </section>
+
+      {/* Benefits Section */}
+      <SchoolBenefits />
+
+      {/* How It Works Section */}
+      <SchoolProcess />
 
       {/* Placeholder for Register Form */}
       <section id="register-form" className="py-16 md:py-24">
