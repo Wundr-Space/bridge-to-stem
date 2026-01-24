@@ -5,6 +5,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { ImpactSection } from "@/components/ImpactSection";
 import { VideoExplainer } from "@/components/VideoExplainer";
 import { FinalCTA } from "@/components/FinalCTA";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <ImpactSection />
       <VideoExplainer />
       <FinalCTA />
+      <Footer />
     </div>
   );
 };
