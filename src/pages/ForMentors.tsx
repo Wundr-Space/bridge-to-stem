@@ -2,6 +2,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MentorHero } from "@/components/mentors/MentorHero";
 import { WhyMentor } from "@/components/mentors/WhyMentor";
+import { MentorProcess } from "@/components/mentors/MentorProcess";
+import { MentorBenefits } from "@/components/mentors/MentorBenefits";
 
 export default function ForMentors() {
   const scrollToSignup = () => {
@@ -25,7 +27,11 @@ export default function ForMentors() {
       {/* Why Mentor Section */}
       <WhyMentor />
 
-      {/* Placeholder for Mentor Stories */}
+      {/* What's Involved - Process */}
+      <MentorProcess />
+
+      {/* What You Get - Benefits */}
+      <MentorBenefits />
       <section id="mentor-stories" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center">
