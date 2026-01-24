@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "For Corporates", href: "#corporates" },
-  { label: "For Schools", href: "#schools" },
-  { label: "For Mentors", href: "#mentors" },
-  { label: "For Students", href: "#students" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "For Corporates", href: "/for-corporates" },
+  { label: "For Schools", href: "/for-schools" },
+  { label: "For Mentors", href: "/for-mentors" },
+  { label: "For Students", href: "/for-students" },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +22,11 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
     <header
@@ -34,25 +39,29 @@ export function Navbar() {
       <div className="container mx-auto px-4 lg:px-8">
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-brand flex items-center justify-center shadow-brand group-hover:shadow-brand-lg transition-shadow duration-300">
               <span className="text-white font-bold text-lg">G</span>
             </div>
             <span className="text-xl font-bold text-foreground">
               Gen<span className="text-primary">-Connect</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 rounded-lg hover:bg-primary/5"
+                to={link.href}
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-lg hover:bg-primary/5 ${
+                  location.pathname === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -69,6 +78,7 @@ export function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6 text-foreground" />
@@ -89,14 +99,17 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 py-6 space-y-2">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+              to={link.href}
+              className={`block px-4 py-3 text-base font-medium rounded-lg transition-colors ${
+                location.pathname === link.href
+                  ? "text-primary bg-primary/5"
+                  : "text-foreground hover:text-primary hover:bg-primary/5"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <div className="pt-4 space-y-3">
             <Button variant="outline" className="w-full">
