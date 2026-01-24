@@ -22,7 +22,7 @@ export function HeroSection() {
           <div className="text-center lg:text-left space-y-6 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full border border-accent/20">
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              <span className="text-sm font-medium text-accent">Empowering the next generation</span>
+              <span className="text-sm font-medium text-accent">Launching Q2 2026 • Pilot Phase</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
@@ -55,19 +55,27 @@ export function HeroSection() {
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/50">
+            {/* Stats - Research-backed, honest pre-launch messaging */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8 border-t border-border/50">
               <div className="text-center lg:text-left">
-                <p className="text-3xl lg:text-4xl font-bold text-primary">500+</p>
-                <p className="text-sm text-muted-foreground">Active Mentors</p>
+                <p className="text-3xl lg:text-4xl font-bold text-primary">9%</p>
+                <p className="text-sm text-muted-foreground">Low SES representation in UK tech</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">The gap we're solving</p>
               </div>
               <div className="text-center lg:text-left">
-                <p className="text-3xl lg:text-4xl font-bold text-primary">50+</p>
-                <p className="text-sm text-muted-foreground">Partner Schools</p>
+                <p className="text-3xl lg:text-4xl font-bold text-primary">75+</p>
+                <p className="text-sm text-muted-foreground">Social Mobility Index companies</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Our target partners</p>
               </div>
               <div className="text-center lg:text-left">
-                <p className="text-3xl lg:text-4xl font-bold text-primary">5k+</p>
-                <p className="text-sm text-muted-foreground">Students Reached</p>
+                <p className="text-3xl lg:text-4xl font-bold text-accent">Q2 2026</p>
+                <p className="text-sm text-muted-foreground">Pilot launch</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Limited founding spots</p>
+              </div>
+              <div className="text-center lg:text-left">
+                <p className="text-3xl lg:text-4xl font-bold text-primary">40%</p>
+                <p className="text-sm text-muted-foreground">Target: STEM perception shift</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Our pilot impact goal</p>
               </div>
             </div>
           </div>
