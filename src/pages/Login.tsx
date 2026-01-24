@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useRedirectIfAuthenticated, getDashboardForRole } from "@/hooks/useAuth";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import type { Database } from "@/integrations/supabase/types";
+
+type AppRole = Database["public"]["Enums"]["app_role"];
 
 const loginSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }),
@@ -18,6 +22,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof LoginFormData, string>>>({});
@@ -25,6 +30,9 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  // Redirect if already authenticated
+  useRedirectIfAuthenticated();
 
   const handleInputChange = (field: keyof LoginFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -78,15 +86,13 @@ export default function Login() {
         throw new Error("Could not retrieve user role");
       }
 
-      // 3. Redirect based on role
-      const userRole = roleData?.role;
+      // 3. Redirect based on role or to redirect param
+      const userRole = roleData?.role as AppRole | undefined;
+      const redirectTo = searchParams.get("redirect");
 
-      if (userRole === "corporate") {
-        navigate("/corporate-dashboard");
-      } else if (userRole === "school") {
-        navigate("/school-dashboard");
-      } else if (userRole === "mentor") {
-        navigate("/mentor-dashboard");
+      if (userRole) {
+        const dashboard = getDashboardForRole(userRole);
+        navigate(redirectTo || dashboard);
       } else {
         // No role found - redirect to home with message
         toast({
