@@ -266,8 +266,8 @@ export default function ForSchools() {
             {/* Callout */}
             <div className="mt-8 text-center">
               <div className="inline-block bg-primary/10 border border-primary/20 rounded-xl px-6 py-4">
-                <p className="text-primary font-semibold">
-                  Purpose-built for state secondary schools with 30%+ FSM eligibility
+              <p className="text-primary font-semibold">
+                Purpose-built for state secondary schools focusing on Alumni connections
                 </p>
               </div>
             </div>
