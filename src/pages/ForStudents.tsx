@@ -3,6 +3,9 @@ import { Footer } from "@/components/Footer";
 import { StudentHero } from "@/components/students/StudentHero";
 import { StudentOpportunity } from "@/components/students/StudentOpportunity";
 import { WhyThisMatters } from "@/components/students/WhyThisMatters";
+import { StudentJourney } from "@/components/students/StudentJourney";
+import { PlacementActivities } from "@/components/students/PlacementActivities";
+import { StudentStories } from "@/components/students/StudentStories";
 
 export default function ForStudents() {
   const scrollToApply = () => {
@@ -29,22 +32,14 @@ export default function ForStudents() {
       {/* Why This Matters */}
       <WhyThisMatters />
 
-      {/* Placeholder for Student Stories */}
-      <section id="student-stories" className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Student Stories
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Hear from students who've been through the program
-            </p>
-            <p className="text-muted-foreground italic">
-              Stories coming soon from our pilot program
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* What to Expect - Journey */}
+      <StudentJourney />
+
+      {/* What You'll Do During Placement */}
+      <PlacementActivities />
+
+      {/* Student Stories */}
+      <StudentStories />
 
       {/* Placeholder for Application Form */}
       <section id="student-apply" className="py-16 md:py-24">
