@@ -44,7 +44,7 @@ const steps = [
   },
   {
     step: 4,
-    title: "Optional Ongoing",
+    title: "Ongoing Guidance",
     duration: "Your choice",
     icon: MessageCircle,
     points: [
