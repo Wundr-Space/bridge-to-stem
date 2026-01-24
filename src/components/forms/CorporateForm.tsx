@@ -17,20 +17,37 @@ import { CheckCircle, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const formSchema = z.object({
+  // Company Information
   companyName: z.string().trim().min(1, "Company name is required").max(100),
   industry: z.string().min(1, "Industry is required"),
   companySize: z.string().min(1, "Company size is required"),
   smiMember: z.string().min(1, "Please select an option"),
+  ukEmployeeCount: z.string().max(20).optional(),
+  // Contact Information
   fullName: z.string().trim().min(1, "Full name is required").max(100),
   jobTitle: z.string().trim().min(1, "Job title is required").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z.string().max(20).optional(),
+  linkedIn: z.string().url("Invalid URL").max(255).optional().or(z.literal("")),
+  // Role & Authority
   role: z.string().min(1, "Please select your role"),
   budgetLine: z.string().min(1, "Please select a budget line"),
-  annualBudget: z.string().optional(),
+  annualBudget: z.string().min(1, "Please select a budget range"),
+  budgetAuthority: z.string().min(1, "Please select your budget authority level"),
+  // Current Challenges
   challenges: z.array(z.string()),
-  interest: z.string().max(500).optional(),
+  // Current Programs
+  hasWorkExperience: z.string().min(1, "Please select an option"),
+  hasERGs: z.string().min(1, "Please select an option"),
+  hasVolunteeringHours: z.string().min(1, "Please select an option"),
+  currentOutreach: z.string().max(200).optional(),
+  // What Success Looks Like
+  successDefinition: z.string().trim().min(1, "Please describe what success looks like").max(500),
+  motivations: z.array(z.string()),
+  // Timeline & Next Steps
+  preferredTimeline: z.string().min(1, "Please select a timeframe"),
   contactMethod: z.string().min(1, "Please select a contact method"),
+  bestTime: z.string().max(100).optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -39,21 +56,24 @@ const industries = [
   "Technology",
   "Financial Services",
   "Professional Services",
+  "Consulting",
   "Other"
 ];
 
 const companySizes = [
   "1,000-5,000",
   "5,000-10,000",
-  "10,000+"
+  "10,000-25,000",
+  "25,000+"
 ];
 
 const roles = [
   "Budget Holder",
   "D&I Lead",
-  "CSR Lead",
+  "CSR/ESG Lead",
   "HR Lead",
   "ERG Leader",
+  "Head of Social Impact",
   "Other"
 ];
 
@@ -62,6 +82,7 @@ const budgetLines = [
   "D&I Programs",
   "Employee Engagement",
   "ESG Reporting",
+  "Social Mobility Initiatives",
   "Other"
 ];
 
@@ -69,17 +90,43 @@ const annualBudgets = [
   "<£100K",
   "£100K-£500K",
   "£500K-£1M",
-  "£1M+",
+  "£1M-£5M",
+  "£5M+",
   "Prefer not to say"
 ];
 
+const budgetAuthorities = [
+  "I approve budget",
+  "I recommend to approver",
+  "I influence decision",
+  "I'm researching options"
+];
+
 const challengeOptions = [
-  "Demonstrating authentic social mobility impact",
-  "Activating diverse employees for mentorship",
-  "Work placement barriers (safeguarding/insurance)",
-  "Measuring ROI on social mobility spend",
-  "Employee volunteering engagement",
-  "ESG/D&I reporting requirements"
+  "Demonstrating authentic social mobility impact beyond donations",
+  "Activating diverse employees for structured mentorship",
+  "Work placement safeguarding/insurance barriers",
+  "Measuring ROI on education/social mobility spend",
+  "Employee volunteering is ad-hoc and hard to measure",
+  "Generic schools outreach lacks relatability",
+  "ESG/D&I reporting requires quantifiable outcomes",
+  "Competitive pressure on Social Mobility Index rankings"
+];
+
+const motivationOptions = [
+  "Measurable ESG/CSR outcomes",
+  "Employee engagement & retention",
+  "Employer brand enhancement",
+  "Graduate recruitment pipeline",
+  "Social Mobility Index ranking",
+  "Authentic D&I impact (not just optics)"
+];
+
+const timelines = [
+  "Q2 2026 (Apr-Jun)",
+  "Q3 2026 (Jul-Sep)",
+  "Q4 2026 (Oct-Dec)",
+  "Exploring for future"
 ];
 
 const contactMethods = ["Email", "Phone", "Video Call"];
@@ -95,16 +142,26 @@ export function CorporateForm() {
     industry: "",
     companySize: "",
     smiMember: "",
+    ukEmployeeCount: "",
     fullName: "",
     jobTitle: "",
     email: "",
     phone: "",
+    linkedIn: "",
     role: "",
     budgetLine: "",
     annualBudget: "",
+    budgetAuthority: "",
     challenges: [],
-    interest: "",
+    hasWorkExperience: "",
+    hasERGs: "",
+    hasVolunteeringHours: "",
+    currentOutreach: "",
+    successDefinition: "",
+    motivations: [],
+    preferredTimeline: "",
     contactMethod: "",
+    bestTime: "",
   });
 
   const handleInputChange = (field: keyof FormData, value: string | string[]) => {
@@ -114,13 +171,22 @@ export function CorporateForm() {
     }
   };
 
-  const handleChallengeToggle = (challenge: string) => {
-    setFormData(prev => ({
-      ...prev,
-      challenges: prev.challenges.includes(challenge)
-        ? prev.challenges.filter(c => c !== challenge)
-        : [...prev.challenges, challenge]
-    }));
+  const handleMultiToggle = (field: "challenges" | "motivations", value: string, maxItems?: number) => {
+    setFormData(prev => {
+      const current = prev[field] as string[];
+      if (current.includes(value)) {
+        return { ...prev, [field]: current.filter(c => c !== value) };
+      }
+      if (maxItems && current.length >= maxItems) {
+        toast({
+          title: `Maximum ${maxItems} selections`,
+          description: `Please deselect an option before selecting another.`,
+          variant: "destructive",
+        });
+        return prev;
+      }
+      return { ...prev, [field]: [...current, value] };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -165,8 +231,11 @@ export function CorporateForm() {
           <CheckCircle className="w-8 h-8 text-accent" />
         </div>
         <h3 className="text-2xl font-bold text-foreground mb-3">Thank You!</h3>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          We'll contact you within 2 business days to discuss how we can activate your diverse employees for measurable impact.
+        <p className="text-muted-foreground max-w-md mx-auto mb-4">
+          We'll contact you within 2 business days to schedule a personalized consultation.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          Check your email for our Impact Framework document.
         </p>
       </div>
     );
@@ -228,9 +297,21 @@ export function CorporateForm() {
               <SelectContent className="bg-card border border-border z-50">
                 <SelectItem value="yes">Yes</SelectItem>
                 <SelectItem value="no">No</SelectItem>
+                <SelectItem value="dont-know">Don't know</SelectItem>
               </SelectContent>
             </Select>
             {errors.smiMember && <p className="text-sm text-destructive mt-1">{errors.smiMember}</p>}
+          </div>
+
+          <div className="sm:col-span-2">
+            <Label htmlFor="ukEmployeeCount">UK Employee Count (optional)</Label>
+            <Input
+              id="ukEmployeeCount"
+              type="text"
+              value={formData.ukEmployeeCount}
+              onChange={(e) => handleInputChange("ukEmployeeCount", e.target.value)}
+              placeholder="e.g., 2,500"
+            />
           </div>
         </div>
       </div>
@@ -282,15 +363,28 @@ export function CorporateForm() {
               onChange={(e) => handleInputChange("phone", e.target.value)}
             />
           </div>
+
+          <div className="sm:col-span-2">
+            <Label htmlFor="linkedIn">LinkedIn Profile (optional)</Label>
+            <Input
+              id="linkedIn"
+              type="url"
+              value={formData.linkedIn}
+              onChange={(e) => handleInputChange("linkedIn", e.target.value)}
+              placeholder="https://linkedin.com/in/..."
+              className={errors.linkedIn ? "border-destructive" : ""}
+            />
+            {errors.linkedIn && <p className="text-sm text-destructive mt-1">{errors.linkedIn}</p>}
+          </div>
         </div>
       </div>
 
-      {/* Budget & Authority */}
+      {/* Role & Authority */}
       <div>
-        <h4 className="text-lg font-semibold text-foreground mb-4">Budget & Authority</h4>
+        <h4 className="text-lg font-semibold text-foreground mb-4">Your Role & Authority</h4>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="role">Your Role *</Label>
+            <Label htmlFor="role">Role in Decision Process *</Label>
             <Select value={formData.role} onValueChange={(v) => handleInputChange("role", v)}>
               <SelectTrigger className={errors.role ? "border-destructive" : ""}>
                 <SelectValue placeholder="Select role" />
@@ -319,10 +413,10 @@ export function CorporateForm() {
             {errors.budgetLine && <p className="text-sm text-destructive mt-1">{errors.budgetLine}</p>}
           </div>
           
-          <div className="sm:col-span-2">
-            <Label htmlFor="annualBudget">Annual CSR/D&I Budget (optional)</Label>
+          <div>
+            <Label htmlFor="annualBudget">Annual CSR/D&I Budget *</Label>
             <Select value={formData.annualBudget} onValueChange={(v) => handleInputChange("annualBudget", v)}>
-              <SelectTrigger>
+              <SelectTrigger className={errors.annualBudget ? "border-destructive" : ""}>
                 <SelectValue placeholder="Select budget range" />
               </SelectTrigger>
               <SelectContent className="bg-card border border-border z-50">
@@ -331,23 +425,39 @@ export function CorporateForm() {
                 ))}
               </SelectContent>
             </Select>
+            {errors.annualBudget && <p className="text-sm text-destructive mt-1">{errors.annualBudget}</p>}
+          </div>
+
+          <div>
+            <Label htmlFor="budgetAuthority">Budget Authority Level *</Label>
+            <Select value={formData.budgetAuthority} onValueChange={(v) => handleInputChange("budgetAuthority", v)}>
+              <SelectTrigger className={errors.budgetAuthority ? "border-destructive" : ""}>
+                <SelectValue placeholder="Select authority level" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border border-border z-50">
+                {budgetAuthorities.map((auth) => (
+                  <SelectItem key={auth} value={auth}>{auth}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.budgetAuthority && <p className="text-sm text-destructive mt-1">{errors.budgetAuthority}</p>}
           </div>
         </div>
       </div>
 
       {/* Current Challenges */}
       <div>
-        <h4 className="text-lg font-semibold text-foreground mb-4">Current Challenges</h4>
-        <p className="text-sm text-muted-foreground mb-4">Select all that apply:</p>
+        <h4 className="text-lg font-semibold text-foreground mb-2">Current Challenges</h4>
+        <p className="text-sm text-muted-foreground mb-4">Which challenges are you facing? (Select all that apply)</p>
         <div className="grid sm:grid-cols-2 gap-3">
           {challengeOptions.map((challenge) => (
             <div key={challenge} className="flex items-start gap-3">
               <Checkbox
-                id={challenge}
+                id={`challenge-${challenge}`}
                 checked={formData.challenges.includes(challenge)}
-                onCheckedChange={() => handleChallengeToggle(challenge)}
+                onCheckedChange={() => handleMultiToggle("challenges", challenge)}
               />
-              <Label htmlFor={challenge} className="text-sm cursor-pointer leading-relaxed">
+              <Label htmlFor={`challenge-${challenge}`} className="text-sm cursor-pointer leading-relaxed">
                 {challenge}
               </Label>
             </div>
@@ -355,20 +465,122 @@ export function CorporateForm() {
         </div>
       </div>
 
-      {/* Additional Info */}
+      {/* Current Programs */}
       <div>
-        <h4 className="text-lg font-semibold text-foreground mb-4">Additional Information</h4>
+        <h4 className="text-lg font-semibold text-foreground mb-4">Current Programs</h4>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="hasWorkExperience">Do you currently run work experience programs? *</Label>
+            <Select value={formData.hasWorkExperience} onValueChange={(v) => handleInputChange("hasWorkExperience", v)}>
+              <SelectTrigger className={errors.hasWorkExperience ? "border-destructive" : ""}>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border border-border z-50">
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+                <SelectItem value="previously">Previously but stopped</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.hasWorkExperience && <p className="text-sm text-destructive mt-1">{errors.hasWorkExperience}</p>}
+          </div>
+
+          <div>
+            <Label htmlFor="hasERGs">Do you have active ERGs for underrepresented groups? *</Label>
+            <Select value={formData.hasERGs} onValueChange={(v) => handleInputChange("hasERGs", v)}>
+              <SelectTrigger className={errors.hasERGs ? "border-destructive" : ""}>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border border-border z-50">
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.hasERGs && <p className="text-sm text-destructive mt-1">{errors.hasERGs}</p>}
+          </div>
+
+          <div>
+            <Label htmlFor="hasVolunteeringHours">Do employees have allocated volunteering/impact hours? *</Label>
+            <Select value={formData.hasVolunteeringHours} onValueChange={(v) => handleInputChange("hasVolunteeringHours", v)}>
+              <SelectTrigger className={errors.hasVolunteeringHours ? "border-destructive" : ""}>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border border-border z-50">
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+                <SelectItem value="informal">Informal only</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.hasVolunteeringHours && <p className="text-sm text-destructive mt-1">{errors.hasVolunteeringHours}</p>}
+          </div>
+
+          <div>
+            <Label htmlFor="currentOutreach">Current schools outreach approach (optional)</Label>
+            <Input
+              id="currentOutreach"
+              value={formData.currentOutreach}
+              onChange={(e) => handleInputChange("currentOutreach", e.target.value.slice(0, 200))}
+              placeholder="e.g., STEM ambassadors, one-off talks"
+            />
+            <p className="text-xs text-muted-foreground mt-1">{formData.currentOutreach?.length || 0}/200</p>
+          </div>
+        </div>
+      </div>
+
+      {/* What Success Looks Like */}
+      <div>
+        <h4 className="text-lg font-semibold text-foreground mb-4">What Success Looks Like</h4>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="interest">What interests you most about this pilot? (optional)</Label>
+            <Label htmlFor="successDefinition">What would make this pilot successful for you? *</Label>
             <Textarea
-              id="interest"
-              value={formData.interest}
-              onChange={(e) => handleInputChange("interest", e.target.value.slice(0, 500))}
-              placeholder="Tell us more..."
+              id="successDefinition"
+              value={formData.successDefinition}
+              onChange={(e) => handleInputChange("successDefinition", e.target.value.slice(0, 500))}
+              placeholder="E.g., 'Quantifiable ESG data for annual report,' 'High employee engagement scores,' 'Measurable student pathway changes'"
               rows={4}
+              className={errors.successDefinition ? "border-destructive" : ""}
             />
-            <p className="text-xs text-muted-foreground mt-1">{formData.interest?.length || 0}/500 characters</p>
+            <p className="text-xs text-muted-foreground mt-1">{formData.successDefinition?.length || 0}/500 characters</p>
+            {errors.successDefinition && <p className="text-sm text-destructive mt-1">{errors.successDefinition}</p>}
+          </div>
+
+          <div>
+            <Label className="mb-2 block">Primary motivations (select up to 3)</Label>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {motivationOptions.map((motivation) => (
+                <div key={motivation} className="flex items-start gap-3">
+                  <Checkbox
+                    id={`motivation-${motivation}`}
+                    checked={formData.motivations.includes(motivation)}
+                    onCheckedChange={() => handleMultiToggle("motivations", motivation, 3)}
+                  />
+                  <Label htmlFor={`motivation-${motivation}`} className="text-sm cursor-pointer leading-relaxed">
+                    {motivation}
+                  </Label>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Timeline & Next Steps */}
+      <div>
+        <h4 className="text-lg font-semibold text-foreground mb-4">Timeline & Next Steps</h4>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="preferredTimeline">Preferred pilot start timeframe *</Label>
+            <Select value={formData.preferredTimeline} onValueChange={(v) => handleInputChange("preferredTimeline", v)}>
+              <SelectTrigger className={errors.preferredTimeline ? "border-destructive" : ""}>
+                <SelectValue placeholder="Select timeframe" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border border-border z-50">
+                {timelines.map((timeline) => (
+                  <SelectItem key={timeline} value={timeline}>{timeline}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.preferredTimeline && <p className="text-sm text-destructive mt-1">{errors.preferredTimeline}</p>}
           </div>
           
           <div>
@@ -385,13 +597,23 @@ export function CorporateForm() {
             </Select>
             {errors.contactMethod && <p className="text-sm text-destructive mt-1">{errors.contactMethod}</p>}
           </div>
+
+          <div className="sm:col-span-2">
+            <Label htmlFor="bestTime">Best time to reach you (optional)</Label>
+            <Input
+              id="bestTime"
+              value={formData.bestTime}
+              onChange={(e) => handleInputChange("bestTime", e.target.value)}
+              placeholder="e.g., Afternoons GMT"
+            />
+          </div>
         </div>
       </div>
 
       {/* Privacy Notice */}
       <p className="text-xs text-muted-foreground">
-        We respect your privacy. Information used only for pilot program contact.{" "}
-        <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+        We respect your privacy. Your information will only be used to contact you about the pilot program and provide relevant resources.{" "}
+        <Link to="/privacy" className="text-primary hover:underline">View our Privacy Policy</Link>
       </p>
 
       {/* Submit Button */}
