@@ -32,7 +32,7 @@ const steps = [
   },
   {
     step: 3,
-    title: "Change a Life",
+    title: "Guide and Inspire",
     duration: "2 weeks",
     icon: Briefcase,
     points: [
