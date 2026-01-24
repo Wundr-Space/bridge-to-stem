@@ -24,13 +24,13 @@ export function MentorHero({ onBecomeaMentor, onSeeStories }: MentorHeroProps) {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Help Students Who Share Your Story See{" "}
-              <span className="text-primary">STEM as Achievable</span>
+              Go Back to <span className="text-primary">Your School</span> and{" "}
+              <span className="text-accent">Change a Life</span>
             </h1>
             
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Give back to students from backgrounds like yours. Show them someone 
-              "like me" can succeed in tech.
+              Return to the school you attended and mentor students who are walking 
+              the same halls you did. Show them someone "like me" made it in STEM.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

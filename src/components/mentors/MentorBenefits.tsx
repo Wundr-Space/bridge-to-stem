@@ -38,7 +38,7 @@ const benefits = [
     icon: Building2,
     color: "primary",
     points: [
-      "Counts toward impact hours",
+      "Use your impact hours to inspire people like you",
       "Fully supported by employer",
       "Insurance coverage",
       "Part of D&I initiatives"
