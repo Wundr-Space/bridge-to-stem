@@ -1,0 +1,333 @@
+<svg width="1200" height="1400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="600" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+    The STEM Pipeline: Where Students Fall Away
+  </text>
+  <text x="600" y="70" font-family="Arial, sans-serif" font-size="18" fill="#7F8C8D" text-anchor="middle">
+    Due to absence of visible, relatable role models
+  </text>
+  
+  <!-- Legend -->
+  <rect x="50" y="90" width="300" height="90" fill="#F8F9FA" stroke="#BDC3C7" stroke-width="2" rx="5"/>
+  <text x="60" y="110" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2C3E50">
+    Pipeline width = % remaining in STEM pathway
+  </text>
+  <circle cx="70" cy="130" r="8" fill="#2E7D8F"/>
+  <text x="85" y="135" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50">General population</text>
+  <circle cx="70" cy="155" r="8" fill="#E74C3C"/>
+  <text x="85" y="160" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50">Women (additional drop-off)</text>
+  <circle cx="220" cy="155" r="8" fill="#C0392B"/>
+  <text x="235" y="160" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50">Black women (compounding)</text>
+  
+  <!-- START: 100% interested -->
+  <g id="stage1">
+    <!-- Pipeline bar -->
+    <rect x="100" y="220" width="800" height="60" fill="#4ECDC4" opacity="0.8" stroke="#2E7D8F" stroke-width="3" rx="10"/>
+    
+    <!-- Stage label -->
+    <text x="500" y="210" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+      PRIMARY SCHOOL (Ages 4-11)
+    </text>
+    <text x="500" y="255" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      100% potential STEM interest
+    </text>
+    
+    <!-- Challenge box -->
+    <rect x="920" y="220" width="250" height="100" fill="#FFF3CD" stroke="#FFC107" stroke-width="2" rx="5"/>
+    <text x="930" y="240" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#856404">
+      CHALLENGE:
+    </text>
+    <text x="930" y="260" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Early stereotypes form
+    </text>
+    <text x="930" y="275" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • "Science is for boys"
+    </text>
+    <text x="930" y="290" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • No diverse role models
+    </text>
+    <text x="930" y="305" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Tech = "not for people like me"
+    </text>
+  </g>
+  
+  <!-- Arrow down -->
+  <path d="M 500 280 L 500 350" stroke="#7F8C8D" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- DECISION POINT 1 -->
+  <g id="decision1">
+    <circle cx="500" cy="370" r="30" fill="#FF6B6B" stroke="#C0392B" stroke-width="3"/>
+    <text x="500" y="375" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      GCSE
+    </text>
+    <text x="500" y="390" font-family="Arial, sans-serif" font-size="10" fill="#FFFFFF" text-anchor="middle">
+      Choices
+    </text>
+    
+    <!-- Label -->
+    <text x="500" y="420" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#E74C3C" text-anchor="middle">
+      DECISION POINT 1: Year 9 (Age 13-14)
+    </text>
+    <text x="500" y="440" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      Do they choose Triple Science? Computer Science? Or "easier" subjects?
+    </text>
+  </g>
+  
+  <!-- Stage 2: 70% remaining -->
+  <g id="stage2">
+    <rect x="150" y="470" width="700" height="60" fill="#4ECDC4" opacity="0.7" stroke="#2E7D8F" stroke-width="3" rx="10"/>
+    
+    <text x="500" y="460" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+      GCSE YEARS (Ages 14-16)
+    </text>
+    <text x="500" y="505" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      70% still on STEM pathway
+    </text>
+    <text x="500" y="525" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      (30% DROP: "STEM too hard" / "Not for me" / Lack of encouragement)
+    </text>
+    
+    <!-- Challenge box -->
+    <rect x="920" y="470" width="250" height="110" fill="#FFF3CD" stroke="#FFC107" stroke-width="2" rx="5"/>
+    <text x="930" y="490" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#856404">
+      CHALLENGE:
+    </text>
+    <text x="930" y="510" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Teachers unconsciously
+    </text>
+    <text x="930" y="525" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+        steer girls away from STEM
+    </text>
+    <text x="930" y="540" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Peer pressure ("nerdy")
+    </text>
+    <text x="930" y="555" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • No visible career paths
+    </text>
+    <text x="930" y="570" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • "Safe" career choices favored
+    </text>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M 500 530 L 500 600" stroke="#7F8C8D" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- DECISION POINT 2 - THE CRITICAL MOMENT -->
+  <g id="decision2">
+    <circle cx="500" cy="620" r="35" fill="#E74C3C" stroke="#C0392B" stroke-width="4"/>
+    <text x="500" y="620" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      A-LEVEL
+    </text>
+    <text x="500" y="635" font-family="Arial, sans-serif" font-size="10" fill="#FFFFFF" text-anchor="middle">
+      CHOICES
+    </text>
+    
+    <!-- Explosion icon showing criticality -->
+    <circle cx="450" cy="620" r="8" fill="#FFC107" opacity="0.8"/>
+    <circle cx="550" cy="620" r="8" fill="#FFC107" opacity="0.8"/>
+    
+    <text x="500" y="675" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#C0392B" text-anchor="middle">
+      CRITICAL DECISION POINT: Year 11 (Age 15-16)
+    </text>
+    <text x="500" y="695" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      Maths? Further Maths? Physics? Computer Science? → STEM pathway
+    </text>
+    <text x="500" y="710" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      OR English? Psychology? Business? → Non-STEM pathway
+    </text>
+    
+    <!-- Highlight box -->
+    <rect x="300" y="720" width="400" height="50" fill="#FFE5E5" stroke="#E74C3C" stroke-width="2" rx="5"/>
+    <text x="500" y="740" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#C0392B" text-anchor="middle">
+      ⚠️ WITHOUT ROLE MODEL: "Tech isn't for people like me"
+    </text>
+    <text x="500" y="757" font-family="Arial, sans-serif" font-size="11" fill="#C0392B" text-anchor="middle">
+      Student rules out STEM completely at this moment
+    </text>
+  </g>
+  
+  <!-- Stage 3: 40% remaining -->
+  <g id="stage3">
+    <rect x="200" y="800" width="600" height="60" fill="#4ECDC4" opacity="0.6" stroke="#2E7D8F" stroke-width="3" rx="10"/>
+    
+    <text x="500" y="790" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+      A-LEVEL YEARS (Ages 16-18)
+    </text>
+    <text x="500" y="835" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      40% still on STEM pathway
+    </text>
+    <text x="500" y="855" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      (Another 30% DROP: "Too difficult" / "Better prospects elsewhere")
+    </text>
+    
+    <!-- Challenge box -->
+    <rect x="920" y="800" width="250" height="100" fill="#FFF3CD" stroke="#FFC107" stroke-width="2" rx="5"/>
+    <text x="930" y="820" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#856404">
+      CHALLENGE:
+    </text>
+    <text x="930" y="840" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • STEM A-Levels are hard
+    </text>
+    <text x="930" y="855" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Drop out to "easier" subjects
+    </text>
+    <text x="930" y="870" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • University costs deter low-SES
+    </text>
+    <text x="930" y="885" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Still no role models visible
+    </text>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M 500 860 L 500 920" stroke="#7F8C8D" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- DECISION POINT 3 -->
+  <g id="decision3">
+    <circle cx="500" cy="940" r="30" fill="#FF6B6B" stroke="#C0392B" stroke-width="3"/>
+    <text x="500" y="940" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      UNI
+    </text>
+    <text x="500" y="955" font-family="Arial, sans-serif" font-size="10" fill="#FFFFFF" text-anchor="middle">
+      Choice
+    </text>
+    
+    <text x="500" y="985" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#E74C3C" text-anchor="middle">
+      DECISION POINT 3: Year 13 (Age 17-18)
+    </text>
+    <text x="500" y="1005" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      Computer Science degree? Engineering? Or "safer" non-STEM degree?
+    </text>
+  </g>
+  
+  <!-- Stage 4: 25% remaining -->
+  <g id="stage4">
+    <rect x="250" y="1030" width="500" height="60" fill="#4ECDC4" opacity="0.5" stroke="#2E7D8F" stroke-width="3" rx="10"/>
+    
+    <text x="500" y="1020" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+      UNIVERSITY (Ages 18-21)
+    </text>
+    <text x="500" y="1065" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      25% on STEM degrees
+    </text>
+    <text x="500" y="1085" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      (Another 15% DROP: Imposter syndrome / Financial pressure / Switch majors)
+    </text>
+    
+    <!-- Challenge box -->
+    <rect x="920" y="1030" width="250" height="100" fill="#FFF3CD" stroke="#FFC107" stroke-width="2" rx="5"/>
+    <text x="930" y="1050" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#856404">
+      CHALLENGE:
+    </text>
+    <text x="930" y="1070" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Imposter syndrome peaks
+    </text>
+    <text x="930" y="1085" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • "Only one like me in class"
+    </text>
+    <text x="930" y="1100" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Debt burden (low-SES)
+    </text>
+    <text x="930" y="1115" font-family="Arial, sans-serif" font-size="11" fill="#856404">
+      • Switch to non-STEM majors
+    </text>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M 500 1090 L 500 1150" stroke="#7F8C8D" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Final stage: 9% in workforce -->
+  <g id="stage5">
+    <rect x="350" y="1180" width="300" height="60" fill="#2E7D8F" opacity="0.9" stroke="#2E7D8F" stroke-width="3" rx="10"/>
+    
+    <text x="500" y="1170" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+      STEM WORKFORCE
+    </text>
+    <text x="500" y="1215" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+      9% from low-SES
+    </text>
+    
+    <!-- Stats box -->
+    <rect x="50" y="1180" width="250" height="100" fill="#FFE5E5" stroke="#E74C3C" stroke-width="2" rx="5"/>
+    <text x="60" y="1200" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#C0392B">
+      INTERSECTIONAL REALITY:
+    </text>
+    <text x="60" y="1220" font-family="Arial, sans-serif" font-size="11" fill="#C0392B">
+      • Women in tech: 16.9%
+    </text>
+    <text x="60" y="1235" font-family="Arial, sans-serif" font-size="11" fill="#C0392B">
+      • Low-SES in tech: 9%
+    </text>
+    <text x="60" y="1250" font-family="Arial, sans-serif" font-size="11" fill="#C0392B">
+      • Black women in tech: 0.6%
+    </text>
+    <text x="60" y="1270" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#C0392B">
+      Compounding disadvantage ↓
+    </text>
+  </g>
+  
+  <!-- THE SOLUTION -->
+  <g id="solution">
+    <rect x="720" y="1180" width="450" height="120" fill="#D5F4E6" stroke="#27AE60" stroke-width="3" rx="10"/>
+    <text x="945" y="1205" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#27AE60" text-anchor="middle">
+      💡 THE GENCONNECT INTERVENTION
+    </text>
+    <text x="945" y="1230" font-family="Arial, sans-serif" font-size="13" fill="#2C3E50" text-anchor="middle">
+      2-week work placement with RELATABLE mentor
+    </text>
+    <text x="945" y="1248" font-family="Arial, sans-serif" font-size="12" fill="#2C3E50" text-anchor="middle">
+      AT THE CRITICAL MOMENT (Year 10, before A-Level choices)
+    </text>
+    
+    <!-- Arrow pointing back to decision point 2 -->
+    <path d="M 900 1180 Q 850 1000 650 620" stroke="#27AE60" stroke-width="4" fill="none" stroke-dasharray="10,5" marker-end="url(#arrowhead-green)"/>
+    
+    <text x="945" y="1270" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#27AE60" text-anchor="middle">
+      RESULT: 40% perception shift, 15% change A-Levels
+    </text>
+    <text x="945" y="1288" font-family="Arial, sans-serif" font-size="11" fill="#2C3E50" text-anchor="middle">
+      "If they can do it, I can too" → Chooses STEM pathway
+    </text>
+  </g>
+  
+  <!-- Bottom caption -->
+  <text x="600" y="1330" font-family="Arial, sans-serif" font-size="14" fill="#7F8C8D" text-anchor="middle">
+    Without visible, relatable role models at each stage, students progressively rule out STEM careers
+  </text>
+  <text x="600" y="1350" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+    GenConnect intervenes at the critical decision point (Year 10) when perceptions are still malleable
+  </text>
+  
+  <!-- Intersectionality visual -->
+  <g id="intersectionality">
+    <text x="100" y="1370" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#C0392B">
+      Pipeline narrows further for:
+    </text>
+    
+    <!-- Stacked bars showing compounding disadvantage -->
+    <rect x="50" y="1380" width="300" height="8" fill="#4ECDC4" opacity="0.8"/>
+    <text x="360" y="1387" font-family="Arial, sans-serif" font-size="10" fill="#2C3E50">
+      General population baseline
+    </text>
+    
+    <rect x="50" y="1395" width="200" height="8" fill="#E74C3C" opacity="0.8"/>
+    <text x="260" y="1402" font-family="Arial, sans-serif" font-size="10" fill="#2C3E50">
+      Women (16.9% in tech workforce)
+    </text>
+    
+    <rect x="50" y="1410" width="27" height="8" fill="#C0392B" opacity="0.8"/>
+    <text x="87" y="1417" font-family="Arial, sans-serif" font-size="10" fill="#2C3E50">
+      Black women (0.6% in tech workforce)
+    </text>
+  </g>
+  
+  <!-- Arrow head definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#7F8C8D" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#27AE60" />
+    </marker>
+  </defs>
+</svg>
