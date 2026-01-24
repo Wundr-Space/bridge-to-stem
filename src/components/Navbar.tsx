@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -14,6 +14,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,11 +67,20 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" className="text-foreground">
+          <div className="hidden lg:flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              className="border-primary text-primary hover:bg-primary/5"
+              onClick={() => navigate('/login')}
+            >
               Log In
             </Button>
-            <Button variant="brand">Get Started</Button>
+            <Button 
+              variant="brand"
+              onClick={() => navigate('/corporate-signup')}
+            >
+              Get Started
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,10 +122,18 @@ export function Navbar() {
             </Link>
           ))}
           <div className="pt-4 space-y-3">
-            <Button variant="outline" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full border-primary text-primary hover:bg-primary/5"
+              onClick={() => navigate('/login')}
+            >
               Log In
             </Button>
-            <Button variant="brand" className="w-full">
+            <Button 
+              variant="brand" 
+              className="w-full"
+              onClick={() => navigate('/corporate-signup')}
+            >
               Get Started
             </Button>
           </div>
