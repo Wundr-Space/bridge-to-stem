@@ -11,7 +11,7 @@ Welcome to the Gen-Connect knowledge base. This wiki contains foundational docum
 - **[How It Works](./how-it-works.md)** - Five-step platform process, stakeholder ecosystem, user journeys, and success metrics
 
 ### Fundraising & Pitching
-- **[Pitch Deck Guide](./pitch-deck-guide.md)** - 12-slide startup pitch deck framework with detailed guidance for each section
+- **[Pitch Deck](./pitch-deck.md)** - Complete 12-slide startup pitch deck with Gen-Connect content and strategy
 
 ## 🎯 Purpose
 
