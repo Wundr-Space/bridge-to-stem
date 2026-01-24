@@ -18,7 +18,6 @@ const signupSchema = z
   .object({
     full_name: z.string().trim().min(1, { message: "Full name is required" }).max(200),
     email: z.string().trim().email({ message: "Please enter a valid email address" }),
-    company: z.string().trim().min(1, { message: "Company name is required" }).max(200),
     job_title: z.string().trim().min(1, { message: "Job title is required" }).max(200),
     school_name: z.string().optional(),
     background_info: z
@@ -65,7 +64,6 @@ export default function MentorSignup() {
   const [formData, setFormData] = useState<SignupFormData>({
     full_name: "",
     email: "",
-    company: "",
     job_title: "",
     school_name: "",
     background_info: "",
@@ -99,8 +97,6 @@ export default function MentorSignup() {
       } else {
         setIsValid(true);
         setCompanyName(data.company_name);
-        // Pre-fill company name
-        setFormData((prev) => ({ ...prev, company: data.company_name }));
       }
     } catch (error) {
       console.error("Error validating invitation:", error);
@@ -203,7 +199,7 @@ export default function MentorSignup() {
         user_id: authData.user.id,
         corporate_id: corporateId,
         full_name: formData.full_name,
-        company: formData.company,
+        company: companyName,
         job_title: formData.job_title,
         background_info: formData.background_info,
         school_id: schoolId,
@@ -429,45 +425,23 @@ export default function MentorSignup() {
                     Professional Background
                   </h2>
                   <div className="space-y-4">
-                    {/* Company & Job Title - Two columns */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {/* Company */}
-                      <div className="space-y-2">
-                        <Label htmlFor="company">
-                          Current Company <span className="text-destructive">*</span>
-                        </Label>
-                        <Input
-                          id="company"
-                          type="text"
-                          placeholder="Company name"
-                          value={formData.company}
-                          onChange={(e) => handleInputChange("company", e.target.value)}
-                          className={errors.company ? "border-destructive" : ""}
-                          disabled={isLoading}
-                        />
-                        {errors.company && (
-                          <p className="text-sm text-destructive">{errors.company}</p>
-                        )}
-                      </div>
-
-                      {/* Job Title */}
-                      <div className="space-y-2">
-                        <Label htmlFor="job_title">
-                          Job Title <span className="text-destructive">*</span>
-                        </Label>
-                        <Input
-                          id="job_title"
-                          type="text"
-                          placeholder="Your role"
-                          value={formData.job_title}
-                          onChange={(e) => handleInputChange("job_title", e.target.value)}
-                          className={errors.job_title ? "border-destructive" : ""}
-                          disabled={isLoading}
-                        />
-                        {errors.job_title && (
-                          <p className="text-sm text-destructive">{errors.job_title}</p>
-                        )}
-                      </div>
+                    {/* Job Title */}
+                    <div className="space-y-2">
+                      <Label htmlFor="job_title">
+                        Job Title <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="job_title"
+                        type="text"
+                        placeholder="Your role"
+                        value={formData.job_title}
+                        onChange={(e) => handleInputChange("job_title", e.target.value)}
+                        className={errors.job_title ? "border-destructive" : ""}
+                        disabled={isLoading}
+                      />
+                      {errors.job_title && (
+                        <p className="text-sm text-destructive">{errors.job_title}</p>
+                      )}
                     </div>
 
                     {/* School Selection */}
