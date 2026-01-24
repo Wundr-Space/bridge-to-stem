@@ -72,7 +72,7 @@ export function AudienceSelector() {
             Choose Your Pathway
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover how Wundr Space creates impact for your role
+            Discover how Gen-Connect creates impact for your role
           </p>
         </div>
 

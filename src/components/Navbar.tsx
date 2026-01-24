@@ -36,10 +36,10 @@ export function Navbar() {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-brand flex items-center justify-center shadow-brand group-hover:shadow-brand-lg transition-shadow duration-300">
-              <span className="text-white font-bold text-lg">W</span>
+              <span className="text-white font-bold text-lg">G</span>
             </div>
             <span className="text-xl font-bold text-foreground">
-              Wundr <span className="text-primary">Space</span>
+              Gen<span className="text-primary">-Connect</span>
             </span>
           </a>
 

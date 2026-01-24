@@ -200,7 +200,7 @@ export function ImpactSection() {
             {/* Wundr Space Logo */}
             <div className="mb-6">
               <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Wundr Space
+                Gen-Connect
               </span>
             </div>
             

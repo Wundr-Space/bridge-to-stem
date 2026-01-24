@@ -37,7 +37,7 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/" className="inline-block mb-4">
               <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Wundr Space
+                Gen-Connect
               </span>
             </Link>
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
@@ -64,7 +64,7 @@ export function Footer() {
             </div>
             
             <p className="text-xs text-muted-foreground">
-              © 2026 Wundr Space
+              © 2026 Gen-Connect
             </p>
           </div>
 
