@@ -8,6 +8,8 @@ Gen-Connect operates as a five-step ecosystem that connects major STEM companies
 
 ## The Five-Step Process
 
+<img width="2312" height="1362" alt="image" src="https://github.com/user-attachments/assets/fb9b87bf-6d21-4c12-b9e9-5baecf1a77c3" />
+
 ### 1. Corporate Partnership 🤝
 
 **Partner with STEM companies to identify diverse employee mentors**
