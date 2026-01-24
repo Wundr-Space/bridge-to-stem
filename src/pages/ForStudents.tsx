@@ -6,6 +6,8 @@ import { WhyThisMatters } from "@/components/students/WhyThisMatters";
 import { StudentJourney } from "@/components/students/StudentJourney";
 import { PlacementActivities } from "@/components/students/PlacementActivities";
 import { StudentStories } from "@/components/students/StudentStories";
+import { StudentFAQ } from "@/components/students/StudentFAQ";
+import { StudentApplicationForm } from "@/components/students/StudentApplicationForm";
 
 export default function ForStudents() {
   const scrollToApply = () => {
@@ -41,19 +43,11 @@ export default function ForStudents() {
       {/* Student Stories */}
       <StudentStories />
 
-      {/* Placeholder for Application Form */}
-      <section id="student-apply" className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Apply for Work Experience
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Application form coming soon
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* FAQ Section */}
+      <StudentFAQ />
+
+      {/* Application Form */}
+      <StudentApplicationForm />
 
       <Footer />
     </div>
