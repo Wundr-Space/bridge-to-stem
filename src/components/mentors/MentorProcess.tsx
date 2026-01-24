@@ -2,10 +2,7 @@ import {
   UserPlus, 
   Users, 
   Briefcase, 
-  MessageCircle,
-  Clock,
-  Calendar,
-  CheckCircle2
+  MessageCircle
 } from "lucide-react";
 
 const steps = [
@@ -59,12 +56,6 @@ const steps = [
   }
 ];
 
-const timeCommitments = [
-  { icon: Clock, text: "Minimum: 2-week work placement (during school breaks)" },
-  { icon: Calendar, text: "Optional: Ongoing check-ins (quarterly or as-needed)" },
-  { icon: CheckCircle2, text: "Flexible to your schedule" },
-  { icon: CheckCircle2, text: "Company-sanctioned volunteering hours" },
-];
 
 export function MentorProcess() {
   return (
@@ -120,25 +111,6 @@ export function MentorProcess() {
           })}
         </div>
 
-        {/* Time Commitment */}
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-muted/50 rounded-2xl p-6 border border-border">
-            <h3 className="text-lg font-bold text-foreground mb-4 text-center">
-              Time Commitment
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {timeCommitments.map((item, index) => {
-                const IconComponent = item.icon;
-                return (
-                  <div key={index} className="flex items-center gap-3 bg-card p-3 rounded-lg">
-                    <IconComponent className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-sm text-foreground">{item.text}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
