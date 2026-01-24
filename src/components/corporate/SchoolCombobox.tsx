@@ -20,18 +20,16 @@ import { supabase } from "@/integrations/supabase/client";
 interface SchoolOption {
   id: string;
   name: string;
-  type: "registered" | "pending";
 }
 
 interface SchoolComboboxProps {
-  corporateId: string;
   value: string;
-  onSelect: (school: { id: string; name: string; type: "registered" | "pending" | "new" } | null) => void;
+  onSelect: (school: { id: string; name: string; isNew: boolean } | null) => void;
   disabled?: boolean;
   error?: string;
 }
 
-export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }: SchoolComboboxProps) {
+export function SchoolCombobox({ value, onSelect, disabled, error }: SchoolComboboxProps) {
   const [open, setOpen] = useState(false);
   const [schools, setSchools] = useState<SchoolOption[]>([]);
   const [searchValue, setSearchValue] = useState("");
@@ -44,48 +42,16 @@ export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }
   const fetchSchools = async () => {
     setIsLoading(true);
     try {
-      // Fetch ALL registered schools (not filtered by corporate)
-      const { data: registeredSchools } = await supabase
-        .from("school_profiles")
-        .select("id, school_name");
+      // Fetch from the public school directory
+      const { data: schoolData } = await supabase
+        .from("school_directory")
+        .select("id, school_name")
+        .order("school_name", { ascending: true });
 
-      // Fetch ALL pending schools (not filtered by corporate)
-      const { data: pendingSchools } = await supabase
-        .from("pending_schools")
-        .select("id, school_name");
-
-      // Deduplicate by school name (case-insensitive)
-      const seenNames = new Set<string>();
-      const allSchools: SchoolOption[] = [];
-
-      // Add registered schools first (they take priority)
-      for (const s of registeredSchools || []) {
-        const nameLower = s.school_name.toLowerCase();
-        if (!seenNames.has(nameLower)) {
-          seenNames.add(nameLower);
-          allSchools.push({
-            id: s.id,
-            name: s.school_name,
-            type: "registered" as const,
-          });
-        }
-      }
-
-      // Add pending schools if name not already seen
-      for (const s of pendingSchools || []) {
-        const nameLower = s.school_name.toLowerCase();
-        if (!seenNames.has(nameLower)) {
-          seenNames.add(nameLower);
-          allSchools.push({
-            id: s.id,
-            name: s.school_name,
-            type: "pending" as const,
-          });
-        }
-      }
-
-      // Sort alphabetically
-      allSchools.sort((a, b) => a.name.localeCompare(b.name));
+      const allSchools: SchoolOption[] = (schoolData || []).map((s) => ({
+        id: s.id,
+        name: s.school_name,
+      }));
 
       setSchools(allSchools);
     } catch (error) {
@@ -102,7 +68,7 @@ export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }
   const handleSelect = (schoolName: string) => {
     const school = schools.find((s) => s.name === schoolName);
     if (school) {
-      onSelect({ id: school.id, name: school.name, type: school.type });
+      onSelect({ id: school.id, name: school.name, isNew: false });
     }
     setOpen(false);
   };
@@ -110,7 +76,7 @@ export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }
   const handleAddNew = () => {
     const newSchoolName = searchValue.trim();
     if (newSchoolName) {
-      onSelect({ id: "", name: newSchoolName, type: "new" });
+      onSelect({ id: "", name: newSchoolName, isNew: true });
       setOpen(false);
       setSearchValue("");
     }
@@ -176,11 +142,6 @@ export function SchoolCombobox({ corporateId, value, onSelect, disabled, error }
                             )}
                           />
                           <span className="flex-1">{school.name}</span>
-                          {school.type === "pending" && (
-                            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">
-                              Pending
-                            </span>
-                          )}
                         </CommandItem>
                       ))}
                   </CommandGroup>

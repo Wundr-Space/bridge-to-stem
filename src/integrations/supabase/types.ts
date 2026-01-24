@@ -156,6 +156,24 @@ export type Database = {
           },
         ]
       }
+      school_directory: {
+        Row: {
+          created_at: string
+          id: string
+          school_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          school_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          school_name?: string
+        }
+        Relationships: []
+      }
       school_profiles: {
         Row: {
           contact_name: string | null
