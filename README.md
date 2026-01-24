@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# Bridge to STEM (Gen-Connect)
 
-## Project info
+Bridge to STEM is a marketing site for the Gen-Connect initiative, showcasing a STEM mentorship platform that connects corporates, schools, mentors, and students. The site highlights the mission, impact metrics, and program details while capturing interest through dedicated audience landing pages and application/intake forms.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ✨ Key Features
 
-## How can I edit this code?
+- **Multi-audience landing experiences** for corporates, schools, mentors, and students.
+- **Storytelling sections** (impact stats, “how it works,” student stories, program comparisons) to communicate outcomes.
+- **Client-side forms with validation** using `zod` and `react-hook-form` patterns.
+- **Responsive layout** with Tailwind CSS and shadcn/ui components.
+- **Accessible UI primitives** from Radix UI and icons from Lucide.
 
-There are several ways of editing your application.
+## 🧭 Routes
 
-**Use Lovable**
+| Route | Description |
+| --- | --- |
+| `/` | Main marketing landing page with hero, audience selection, impact, and CTA sections. |
+| `/for-corporates` | Corporate-focused pitch, benefits, and pilot request form. |
+| `/for-schools` | School partnership information and inquiry sections. |
+| `/for-mentors` | Mentor journey, benefits, FAQs, and application flow. |
+| `/for-students` | Student opportunity, journey overview, stories, and application form. |
+| `*` | Not found page. |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🛠 Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **React 18 + TypeScript** for UI development.
+- **Vite** for fast local development and builds.
+- **React Router** for multi-page navigation.
+- **Tailwind CSS** and **shadcn/ui** for styling and design system components.
+- **Radix UI** primitives and **Lucide** icons.
+- **TanStack React Query** for client data utilities.
+- **Vitest** for unit testing.
 
-**Use your preferred IDE**
+## 📂 Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```
+src/
+  components/         # Reusable UI sections and shadcn/ui components
+  hooks/              # Custom hooks (e.g., toast helpers)
+  lib/                # Utility helpers
+  pages/              # Route-level page compositions
+  assets/             # Images and static assets
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## ✅ Getting Started
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Node.js 18+ (recommended)
+- npm (or compatible package manager)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Install & Run
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+### Preview the Production Build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run preview
+```
 
-## What technologies are used for this project?
+## 🔍 Scripts
 
-This project is built with:
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the local development server. |
+| `npm run build` | Create a production build in `dist/`. |
+| `npm run build:dev` | Build using the development mode. |
+| `npm run preview` | Preview the production build locally. |
+| `npm run lint` | Run ESLint across the codebase. |
+| `npm run test` | Run the Vitest test suite once. |
+| `npm run test:watch` | Watch tests with Vitest. |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🧾 Notes on Forms
 
-## How can I deploy this project?
+Forms in the marketing flows (corporate pilot request, mentor/student applications, etc.) currently validate inputs client-side. If you plan to persist submissions, wire them to an API endpoint or a form service and update the submit handlers accordingly.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📦 Deployment
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This is a standard Vite project. Any static hosting provider (Netlify, Vercel, S3, etc.) can serve the `dist/` output created by `npm run build`.
