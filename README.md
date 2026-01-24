@@ -2,7 +2,9 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**: https://lovable.dev/projects/bridge-to-stem
+
+**Pitch Deck**: https://prezi.com/view/CbouDPe0a3sU5r65O9SG/?referral_token=xwJoyJlnB3FN
 
 ## How can I edit this code?
 
@@ -10,7 +12,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Simply visit the [Lovable Project](https://lovable.dev/projects/48bced1b-4cfa-4c4b-b721-eeecfedecc8c) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
