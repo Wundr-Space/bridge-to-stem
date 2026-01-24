@@ -53,6 +53,8 @@ export type Database = {
           full_name: string
           id: string
           job_title: string | null
+          pending_school_id: string | null
+          school_id: string | null
           updated_at: string
           user_id: string
         }
@@ -64,6 +66,8 @@ export type Database = {
           full_name: string
           id?: string
           job_title?: string | null
+          pending_school_id?: string | null
+          school_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -75,6 +79,8 @@ export type Database = {
           full_name?: string
           id?: string
           job_title?: string | null
+          pending_school_id?: string | null
+          school_id?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -84,6 +90,68 @@ export type Database = {
             columns: ["corporate_id"]
             isOneToOne: false
             referencedRelation: "corporate_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentor_profiles_pending_school_id_fkey"
+            columns: ["pending_school_id"]
+            isOneToOne: false
+            referencedRelation: "pending_schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentor_profiles_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "school_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pending_schools: {
+        Row: {
+          corporate_id: string | null
+          created_at: string
+          created_by_mentor_id: string | null
+          id: string
+          invited_at: string | null
+          invited_email: string | null
+          school_name: string
+          updated_at: string
+        }
+        Insert: {
+          corporate_id?: string | null
+          created_at?: string
+          created_by_mentor_id?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_email?: string | null
+          school_name: string
+          updated_at?: string
+        }
+        Update: {
+          corporate_id?: string | null
+          created_at?: string
+          created_by_mentor_id?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_email?: string | null
+          school_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pending_schools_corporate_id_fkey"
+            columns: ["corporate_id"]
+            isOneToOne: false
+            referencedRelation: "corporate_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pending_schools_created_by_mentor_id_fkey"
+            columns: ["created_by_mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentor_profiles"
             referencedColumns: ["id"]
           },
         ]

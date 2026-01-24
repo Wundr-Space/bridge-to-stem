@@ -17,7 +17,22 @@ import {
   Loader2,
   UserPlus,
   Building2,
+  Eye,
+  Send,
 } from "lucide-react";
+import { MentorDetailDialog } from "@/components/corporate/MentorDetailDialog";
+import { SchoolDetailDialog } from "@/components/corporate/SchoolDetailDialog";
+import { InviteSchoolDialog } from "@/components/corporate/InviteSchoolDialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface CorporateProfile {
   id: string;
@@ -29,15 +44,35 @@ interface CorporateProfile {
 interface DashboardStats {
   activeMentors: number;
   partnerSchools: number;
+  pendingSchools: number;
   placements: number;
 }
 
-interface RecentActivity {
+interface MentorProfile {
   id: string;
-  date: string;
-  type: "mentor" | "school";
-  name: string;
-  status: "Active" | "Pending";
+  full_name: string;
+  company: string | null;
+  job_title: string | null;
+  background_info: string | null;
+  created_at: string;
+  school_name?: string | null;
+  pending_school_name?: string | null;
+}
+
+interface SchoolProfile {
+  id: string;
+  school_name: string;
+  location: string | null;
+  school_type: string | null;
+  student_count: string | null;
+  fsm_percentage: string | null;
+  contact_name: string | null;
+  contact_role: string | null;
+  phone: string | null;
+  created_at: string;
+  is_pending?: boolean;
+  invited_email?: string | null;
+  invited_at?: string | null;
 }
 
 export default function CorporateDashboard() {
@@ -47,10 +82,20 @@ export default function CorporateDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     activeMentors: 0,
     partnerSchools: 0,
+    pendingSchools: 0,
     placements: 0,
   });
-  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
+  const [mentors, setMentors] = useState<MentorProfile[]>([]);
+  const [schools, setSchools] = useState<SchoolProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Dialog states
+  const [selectedMentor, setSelectedMentor] = useState<MentorProfile | null>(null);
+  const [selectedSchool, setSelectedSchool] = useState<SchoolProfile | null>(null);
+  const [mentorDialogOpen, setMentorDialogOpen] = useState(false);
+  const [schoolDialogOpen, setSchoolDialogOpen] = useState(false);
+  const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
+  const [schoolToInvite, setSchoolToInvite] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -73,59 +118,104 @@ export default function CorporateDashboard() {
       setProfile(profileData);
 
       if (profileData) {
-        // Fetch mentor count
-        const { count: mentorCount } = await supabase
+        // Fetch all mentors with school info
+        const { data: mentorData } = await supabase
           .from("mentor_profiles")
-          .select("*", { count: "exact", head: true })
-          .eq("corporate_id", profileData.id);
-
-        // Fetch school count
-        const { count: schoolCount } = await supabase
-          .from("school_profiles")
-          .select("*", { count: "exact", head: true })
-          .eq("corporate_id", profileData.id);
-
-        setStats({
-          activeMentors: mentorCount || 0,
-          partnerSchools: schoolCount || 0,
-          placements: 0, // Future functionality
-        });
-
-        // Fetch recent mentors and schools for activity
-        const { data: mentors } = await supabase
-          .from("mentor_profiles")
-          .select("id, full_name, created_at")
+          .select(`
+            id, 
+            full_name, 
+            company, 
+            job_title, 
+            background_info, 
+            created_at,
+            school_id,
+            pending_school_id
+          `)
           .eq("corporate_id", profileData.id)
-          .order("created_at", { ascending: false })
-          .limit(5);
+          .order("created_at", { ascending: false });
 
-        const { data: schools } = await supabase
+        // Fetch school names for mentors
+        const mentorsWithSchools: MentorProfile[] = [];
+        for (const mentor of mentorData || []) {
+          let schoolName = null;
+          let pendingSchoolName = null;
+
+          if (mentor.school_id) {
+            const { data: schoolData } = await supabase
+              .from("school_profiles")
+              .select("school_name")
+              .eq("id", mentor.school_id)
+              .maybeSingle();
+            schoolName = schoolData?.school_name || null;
+          }
+
+          if (mentor.pending_school_id) {
+            const { data: pendingData } = await supabase
+              .from("pending_schools")
+              .select("school_name")
+              .eq("id", mentor.pending_school_id)
+              .maybeSingle();
+            pendingSchoolName = pendingData?.school_name || null;
+          }
+
+          mentorsWithSchools.push({
+            id: mentor.id,
+            full_name: mentor.full_name,
+            company: mentor.company,
+            job_title: mentor.job_title,
+            background_info: mentor.background_info,
+            created_at: mentor.created_at,
+            school_name: schoolName,
+            pending_school_name: pendingSchoolName,
+          });
+        }
+        setMentors(mentorsWithSchools);
+
+        // Fetch registered schools
+        const { data: schoolData } = await supabase
           .from("school_profiles")
-          .select("id, school_name, created_at")
+          .select("*")
           .eq("corporate_id", profileData.id)
-          .order("created_at", { ascending: false })
-          .limit(5);
+          .order("created_at", { ascending: false });
 
-        // Combine and sort recent activity
-        const activity: RecentActivity[] = [
-          ...(mentors || []).map((m) => ({
-            id: m.id,
-            date: new Date(m.created_at).toLocaleDateString(),
-            type: "mentor" as const,
-            name: m.full_name,
-            status: "Active" as const,
+        // Fetch pending schools
+        const { data: pendingSchoolData } = await supabase
+          .from("pending_schools")
+          .select("*")
+          .eq("corporate_id", profileData.id)
+          .order("created_at", { ascending: false });
+
+        // Combine schools
+        const allSchools: SchoolProfile[] = [
+          ...(schoolData || []).map((s) => ({
+            ...s,
+            is_pending: false,
           })),
-          ...(schools || []).map((s) => ({
+          ...(pendingSchoolData || []).map((s) => ({
             id: s.id,
-            date: new Date(s.created_at).toLocaleDateString(),
-            type: "school" as const,
-            name: s.school_name,
-            status: "Active" as const,
+            school_name: s.school_name,
+            location: null,
+            school_type: null,
+            student_count: null,
+            fsm_percentage: null,
+            contact_name: null,
+            contact_role: null,
+            phone: null,
+            created_at: s.created_at,
+            is_pending: true,
+            invited_email: s.invited_email,
+            invited_at: s.invited_at,
           })),
         ];
+        setSchools(allSchools);
 
-        activity.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setRecentActivity(activity.slice(0, 5));
+        // Update stats
+        setStats({
+          activeMentors: mentorsWithSchools.length,
+          partnerSchools: (schoolData || []).length,
+          pendingSchools: (pendingSchoolData || []).length,
+          placements: 0,
+        });
       }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
@@ -177,6 +267,21 @@ export default function CorporateDashboard() {
 
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  const handleViewMentor = (mentor: MentorProfile) => {
+    setSelectedMentor(mentor);
+    setMentorDialogOpen(true);
+  };
+
+  const handleViewSchool = (school: SchoolProfile) => {
+    setSelectedSchool(school);
+    setSchoolDialogOpen(true);
+  };
+
+  const handleInviteSchool = (school: SchoolProfile) => {
+    setSchoolToInvite({ id: school.id, name: school.school_name });
+    setInviteDialogOpen(true);
   };
 
   if (authLoading || isLoading) {
@@ -254,7 +359,7 @@ export default function CorporateDashboard() {
 
           {/* Section 1: Quick Stats */}
           <section className="mb-8">
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-4 gap-4">
               <StatCard
                 icon={Users}
                 label="Active Mentors"
@@ -266,6 +371,12 @@ export default function CorporateDashboard() {
                 label="Partner Schools"
                 value={stats.partnerSchools}
                 color="text-accent"
+              />
+              <StatCard
+                icon={Building2}
+                label="Pending Schools"
+                value={stats.pendingSchools}
+                color="text-yellow-600"
               />
               <StatCard
                 icon={Briefcase}
@@ -356,94 +467,182 @@ export default function CorporateDashboard() {
             </div>
           </section>
 
-          {/* Section 3: Recent Activity */}
+          {/* Section 3: Mentors and Schools Lists */}
           <section className="mb-8">
-            <h2 className="text-lg font-semibold text-foreground mb-4">Recent Activity</h2>
-            <div className="bg-background rounded-xl border border-border overflow-hidden">
-              {recentActivity.length > 0 ? (
-                <table className="w-full">
-                  <thead className="bg-muted/50">
-                    <tr>
-                      <th className="text-left text-sm font-medium text-muted-foreground px-4 py-3">
-                        Date
-                      </th>
-                      <th className="text-left text-sm font-medium text-muted-foreground px-4 py-3">
-                        Type
-                      </th>
-                      <th className="text-left text-sm font-medium text-muted-foreground px-4 py-3">
-                        Name
-                      </th>
-                      <th className="text-left text-sm font-medium text-muted-foreground px-4 py-3">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentActivity.map((activity) => (
-                      <tr key={activity.id} className="border-t border-border">
-                        <td className="px-4 py-3 text-sm text-foreground">{activity.date}</td>
-                        <td className="px-4 py-3">
-                          <span
-                            className={`inline-flex items-center gap-1.5 text-sm font-medium ${
-                              activity.type === "mentor" ? "text-primary" : "text-accent"
-                            }`}
-                          >
-                            {activity.type === "mentor" ? (
-                              <Users className="w-4 h-4" />
-                            ) : (
-                              <School className="w-4 h-4" />
-                            )}
-                            {activity.type === "mentor" ? "Mentor" : "School"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-foreground">{activity.name}</td>
-                        <td className="px-4 py-3">
-                          <span
-                            className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
-                              activity.status === "Active"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
-                            }`}
-                          >
-                            {activity.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div className="px-4 py-8 text-center text-muted-foreground">
-                  <Users className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                  <p className="text-sm">No recent activity yet</p>
-                  <p className="text-xs mt-1">
-                    Share your invitation links to start building your program
-                  </p>
-                </div>
-              )}
-            </div>
-          </section>
+            <Tabs defaultValue="mentors" className="w-full">
+              <TabsList className="mb-4">
+                <TabsTrigger value="mentors" className="gap-2">
+                  <Users className="w-4 h-4" />
+                  Mentors ({mentors.length})
+                </TabsTrigger>
+                <TabsTrigger value="schools" className="gap-2">
+                  <School className="w-4 h-4" />
+                  Schools ({schools.length})
+                </TabsTrigger>
+              </TabsList>
 
-          {/* Section 4: Quick Actions */}
-          <section>
-            <h2 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h2>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="outline">
-                <Users className="w-4 h-4 mr-2" />
-                View All Mentors
-              </Button>
-              <Button variant="outline">
-                <School className="w-4 h-4 mr-2" />
-                View All Schools
-              </Button>
-              <Button variant="outline">
-                <Briefcase className="w-4 h-4 mr-2" />
-                Download Report
-              </Button>
-            </div>
+              <TabsContent value="mentors">
+                <div className="bg-background rounded-xl border border-border overflow-hidden">
+                  {mentors.length > 0 ? (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Job Title</TableHead>
+                          <TableHead>Company</TableHead>
+                          <TableHead>School</TableHead>
+                          <TableHead>Joined</TableHead>
+                          <TableHead className="w-[80px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {mentors.map((mentor) => (
+                          <TableRow key={mentor.id}>
+                            <TableCell className="font-medium">{mentor.full_name}</TableCell>
+                            <TableCell>{mentor.job_title || "-"}</TableCell>
+                            <TableCell>{mentor.company || "-"}</TableCell>
+                            <TableCell>
+                              {mentor.school_name ? (
+                                mentor.school_name
+                              ) : mentor.pending_school_name ? (
+                                <div className="flex items-center gap-2">
+                                  {mentor.pending_school_name}
+                                  <Badge variant="secondary" className="text-xs">Pending</Badge>
+                                </div>
+                              ) : (
+                                "-"
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(mentor.created_at).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleViewMentor(mentor)}
+                              >
+                                <Eye className="w-4 h-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  ) : (
+                    <div className="px-4 py-8 text-center text-muted-foreground">
+                      <Users className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                      <p className="text-sm">No mentors registered yet</p>
+                      <p className="text-xs mt-1">
+                        Share your mentor invitation link to get started
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="schools">
+                <div className="bg-background rounded-xl border border-border overflow-hidden">
+                  {schools.length > 0 ? (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>School Name</TableHead>
+                          <TableHead>Type</TableHead>
+                          <TableHead>Location</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Added</TableHead>
+                          <TableHead className="w-[100px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {schools.map((school) => (
+                          <TableRow key={school.id}>
+                            <TableCell className="font-medium">{school.school_name}</TableCell>
+                            <TableCell>{school.school_type || "-"}</TableCell>
+                            <TableCell>{school.location || "-"}</TableCell>
+                            <TableCell>
+                              {school.is_pending ? (
+                                school.invited_at ? (
+                                  <Badge variant="outline" className="text-xs">
+                                    Invited
+                                  </Badge>
+                                ) : (
+                                  <Badge variant="secondary" className="text-xs">
+                                    Pending
+                                  </Badge>
+                                )
+                              ) : (
+                                <Badge className="text-xs bg-green-100 text-green-700 hover:bg-green-100">
+                                  Registered
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(school.created_at).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleViewSchool(school)}
+                                >
+                                  <Eye className="w-4 h-4" />
+                                </Button>
+                                {school.is_pending && !school.invited_at && (
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleInviteSchool(school)}
+                                    title="Send invitation email"
+                                  >
+                                    <Send className="w-4 h-4 text-primary" />
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  ) : (
+                    <div className="px-4 py-8 text-center text-muted-foreground">
+                      <School className="w-12 h-12 mx-auto mb-3 opacity-20" />
+                      <p className="text-sm">No schools registered yet</p>
+                      <p className="text-xs mt-1">
+                        Share your school invitation link or have mentors add schools during signup
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
           </section>
         </main>
       </div>
+
+      {/* Dialogs */}
+      <MentorDetailDialog
+        mentor={selectedMentor}
+        open={mentorDialogOpen}
+        onOpenChange={setMentorDialogOpen}
+      />
+      <SchoolDetailDialog
+        school={selectedSchool}
+        open={schoolDialogOpen}
+        onOpenChange={setSchoolDialogOpen}
+      />
+      {schoolToInvite && profile && (
+        <InviteSchoolDialog
+          open={inviteDialogOpen}
+          onOpenChange={setInviteDialogOpen}
+          schoolId={schoolToInvite.id}
+          schoolName={schoolToInvite.name}
+          corporateId={profile.id}
+          onInviteSent={fetchDashboardData}
+        />
+      )}
     </>
   );
 }
