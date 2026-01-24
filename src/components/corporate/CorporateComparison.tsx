@@ -47,7 +47,7 @@ export function CorporateComparison() {
             </ul>
           </div>
 
-          {/* With Wundr Space */}
+          {/* With Gen-Connect */}
           <div className="bg-gradient-to-br from-accent/10 to-primary/10 border border-accent/30 rounded-2xl p-8">
             <h3 className="text-lg font-semibold text-foreground mb-6 pb-4 border-b border-accent/20">
               What You'll Achieve
