@@ -6,6 +6,8 @@
 
 **Pitch Deck**: https://prezi.com/view/CbouDPe0a3sU5r65O9SG/?referral_token=xwJoyJlnB3FN
 
+**Wiki**: [wiki](/wiki)
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
