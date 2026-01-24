@@ -7,8 +7,9 @@ import {
   BarChart3, Users, ShieldCheck, 
   Handshake, UserCheck, Settings, Briefcase, FileText 
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { CorporateForm } from "@/components/forms/CorporateForm";
 
 // Animated counter hook
 function useAnimatedCounter(end: number, duration: number = 2000) {
@@ -389,11 +390,104 @@ const ForCorporates = () => {
           {/* CTA */}
           <div className="text-center mt-12">
             <Button size="lg" variant="brand" className="text-base" asChild>
-              <Link to="/contact?type=corporate">
+              <a href="#pilot-form">
                 Start Your Partnership Journey
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+              </a>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Pilot Opportunity Section */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium mb-4">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              Limited Availability
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Limited Pilot Spots — Q2 2026
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Join industry leaders in proving authentic D&I impact
+            </p>
+          </div>
+
+          {/* Three Columns */}
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto mb-10">
+            {/* Pilot Benefits */}
+            <Card className="border-border/50">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-4">Pilot Benefits</h3>
+                <ul className="space-y-3">
+                  {["First-mover advantage", "Dedicated support team", "Co-branded impact reports", "Platform feature input"].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* What's Included */}
+            <Card className="border-accent/30 bg-accent/5">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-4">What's Included</h3>
+                <ul className="space-y-3">
+                  {["10-20 student placements", "Full compliance handling", "Pre/post impact measurement", "6-month outcome tracking", "Quarterly reports"].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Investment */}
+            <Card className="border-border/50">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-4">Investment</h3>
+                <ul className="space-y-3">
+                  {["£50K-£100K pilot pricing", "Aligned with CSR budgets", "Measurable ROI", "Flexible payment terms"].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Trust Bar */}
+          <div className="text-center">
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full">
+              Limited to 5 companies for personalized attention
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Registration Form Section */}
+      <section id="pilot-form" className="py-20 md:py-28 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Request Pilot Information
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Let's discuss how we can activate your diverse employees for measurable impact
+              </p>
+            </div>
+
+            <div className="bg-card rounded-2xl border border-border/50 p-6 md:p-10">
+              <CorporateForm />
+            </div>
           </div>
         </div>
       </section>
