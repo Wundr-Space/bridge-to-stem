@@ -1,7 +1,7 @@
 import { 
   UserPlus, 
   Users, 
-  Briefcase, 
+  Route, 
   MessageCircle
 } from "lucide-react";
 
@@ -34,7 +34,7 @@ const steps = [
     step: 3,
     title: "Guide and Inspire",
     duration: "2 weeks",
-    icon: Briefcase,
+    icon: Route,
     points: [
       "Be the proof they've been waiting for",
       "Show them what's possible for 'someone like me'",
