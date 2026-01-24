@@ -90,32 +90,47 @@ export type Database = {
       }
       school_profiles: {
         Row: {
+          contact_name: string | null
+          contact_role: string | null
           corporate_id: string | null
           created_at: string
           fsm_percentage: string | null
           id: string
           location: string | null
+          phone: string | null
           school_name: string
+          school_type: string | null
+          student_count: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          contact_name?: string | null
+          contact_role?: string | null
           corporate_id?: string | null
           created_at?: string
           fsm_percentage?: string | null
           id?: string
           location?: string | null
+          phone?: string | null
           school_name: string
+          school_type?: string | null
+          student_count?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          contact_name?: string | null
+          contact_role?: string | null
           corporate_id?: string | null
           created_at?: string
           fsm_percentage?: string | null
           id?: string
           location?: string | null
+          phone?: string | null
           school_name?: string
+          school_type?: string | null
+          student_count?: string | null
           updated_at?: string
           user_id?: string
         }
