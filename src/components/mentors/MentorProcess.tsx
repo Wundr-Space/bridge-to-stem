@@ -32,14 +32,14 @@ const steps = [
   },
   {
     step: 3,
-    title: "Host Placement",
+    title: "Change a Life",
     duration: "2 weeks",
     icon: Briefcase,
     points: [
-      "Student shadows your work",
-      "Share your daily reality",
-      "Answer questions honestly",
-      "Be yourself - authenticity matters"
+      "Be the proof they've been waiting for",
+      "Show them what's possible for 'someone like me'",
+      "Share your real story - struggles and all",
+      "Watch their confidence transform"
     ]
   },
   {
