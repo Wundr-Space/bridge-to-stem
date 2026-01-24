@@ -3,6 +3,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SchoolBenefits } from "@/components/schools/SchoolBenefits";
 import { SchoolProcess } from "@/components/schools/SchoolProcess";
+import { SchoolOfsted } from "@/components/schools/SchoolOfsted";
+import { SchoolForm } from "@/components/forms/SchoolForm";
 import { 
   Users, 
   Building2, 
@@ -281,19 +283,25 @@ export default function ForSchools() {
       {/* How It Works Section */}
       <SchoolProcess />
 
-      {/* Placeholder for Register Form */}
+      {/* OFSTED Section */}
+      <SchoolOfsted />
+
+      {/* Registration Form */}
       <section id="register-form" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Register Your School
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              School registration form coming soon
-            </p>
-            <Button size="lg" disabled>
-              Registration Opening Soon
-            </Button>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Register Your School
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Join our network and give your students access to relatable STEM mentors
+              </p>
+            </div>
+            
+            <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
+              <SchoolForm />
+            </div>
           </div>
         </div>
       </section>
