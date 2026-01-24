@@ -7,6 +7,9 @@ Welcome to the Gen-Connect knowledge base. This wiki contains foundational docum
 ### Strategy & Planning
 - **[Startup Concept Note](./startup-concept-note.md)** - Comprehensive overview of customer segments, problem statement, value proposition, solution breakdown, and experiment plan
 
+### Platform Overview
+- **[How It Works](./how-it-works.md)** - Five-step platform process, stakeholder ecosystem, user journeys, and success metrics
+
 ## 🎯 Purpose
 
 This wiki serves as the central repository for:
