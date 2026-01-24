@@ -19,10 +19,12 @@ import {
   Building2,
   Eye,
   Send,
+  Link2,
 } from "lucide-react";
 import { MentorDetailDialog } from "@/components/corporate/MentorDetailDialog";
 import { SchoolDetailDialog } from "@/components/corporate/SchoolDetailDialog";
 import { InviteSchoolDialog } from "@/components/corporate/InviteSchoolDialog";
+import { AssignSchoolDialog } from "@/components/corporate/AssignSchoolDialog";
 import {
   Table,
   TableBody,
@@ -95,6 +97,8 @@ export default function CorporateDashboard() {
   const [mentorDialogOpen, setMentorDialogOpen] = useState(false);
   const [schoolDialogOpen, setSchoolDialogOpen] = useState(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
+  const [assignSchoolDialogOpen, setAssignSchoolDialogOpen] = useState(false);
+  const [mentorToAssign, setMentorToAssign] = useState<MentorProfile | null>(null);
   const [schoolToInvite, setSchoolToInvite] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
@@ -282,6 +286,11 @@ export default function CorporateDashboard() {
   const handleInviteSchool = (school: SchoolProfile) => {
     setSchoolToInvite({ id: school.id, name: school.school_name });
     setInviteDialogOpen(true);
+  };
+
+  const handleAssignSchool = (mentor: MentorProfile) => {
+    setMentorToAssign(mentor);
+    setAssignSchoolDialogOpen(true);
   };
 
   if (authLoading || isLoading) {
@@ -491,7 +500,7 @@ export default function CorporateDashboard() {
                           <TableHead>Job Title</TableHead>
                           <TableHead>School</TableHead>
                           <TableHead>Joined</TableHead>
-                          <TableHead className="w-[80px]">Actions</TableHead>
+                          <TableHead className="w-[100px]">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -501,27 +510,41 @@ export default function CorporateDashboard() {
                             <TableCell>{mentor.job_title || "-"}</TableCell>
                             <TableCell>
                               {mentor.school_name ? (
-                                mentor.school_name
+                                <div className="flex items-center gap-2">
+                                  {mentor.school_name}
+                                  <Badge className="text-xs bg-accent/20 text-accent hover:bg-accent/20">Registered</Badge>
+                                </div>
                               ) : mentor.pending_school_name ? (
                                 <div className="flex items-center gap-2">
                                   {mentor.pending_school_name}
-                                  <Badge variant="secondary" className="text-xs">Pending</Badge>
+                                  <Badge variant="secondary" className="text-xs">Not Registered</Badge>
                                 </div>
                               ) : (
-                                "-"
+                                <span className="text-muted-foreground">-</span>
                               )}
                             </TableCell>
                             <TableCell>
                               {new Date(mentor.created_at).toLocaleDateString()}
                             </TableCell>
                             <TableCell>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleViewMentor(mentor)}
-                              >
-                                <Eye className="w-4 h-4" />
-                              </Button>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleViewMentor(mentor)}
+                                  title="View details"
+                                >
+                                  <Eye className="w-4 h-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleAssignSchool(mentor)}
+                                  title="Assign school"
+                                >
+                                  <Link2 className="w-4 h-4 text-primary" />
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -571,7 +594,7 @@ export default function CorporateDashboard() {
                                   </Badge>
                                 )
                               ) : (
-                                <Badge className="text-xs bg-green-100 text-green-700 hover:bg-green-100">
+                                <Badge className="text-xs bg-accent/20 text-accent hover:bg-accent/20">
                                   Registered
                                 </Badge>
                               )}
@@ -639,6 +662,18 @@ export default function CorporateDashboard() {
           schoolName={schoolToInvite.name}
           corporateId={profile.id}
           onInviteSent={fetchDashboardData}
+        />
+      )}
+      {mentorToAssign && profile && (
+        <AssignSchoolDialog
+          open={assignSchoolDialogOpen}
+          onOpenChange={setAssignSchoolDialogOpen}
+          mentorId={mentorToAssign.id}
+          mentorName={mentorToAssign.full_name}
+          corporateId={profile.id}
+          currentSchoolName={mentorToAssign.school_name}
+          currentPendingSchoolName={mentorToAssign.pending_school_name}
+          onAssigned={fetchDashboardData}
         />
       )}
     </>
