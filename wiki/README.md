@@ -2,6 +2,10 @@
 
 Welcome to the Gen-Connect knowledge base. This wiki contains foundational documents, strategy notes, and planning materials for the Gen-Connect platform.
 
+**URL**: https://lovable.dev/projects/bridge-to-stem
+
+**Pitch Deck**: https://prezi.com/view/CbouDPe0a3sU5r65O9SG/?referral_token=xwJoyJlnB3FN
+
 # Core Hypthesis 
 The absence of visible, relatable role models is a primary barrier at public primary and secondary schools, preventing people from low socioeconomic backgrounds from pursuing careers in STEM (in particular women, even more so Black women).
 
