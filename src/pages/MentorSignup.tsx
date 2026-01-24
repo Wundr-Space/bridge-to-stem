@@ -46,7 +46,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
 interface SelectedSchool {
   id: string;
   name: string;
-  type: "registered" | "pending" | "new";
+  isNew: boolean;
 }
 
 export default function MentorSignup() {
@@ -170,12 +170,13 @@ export default function MentorSignup() {
       let pendingSchoolId: string | null = null;
 
       if (selectedSchool) {
-        if (selectedSchool.type === "registered") {
-          schoolId = selectedSchool.id;
-        } else if (selectedSchool.type === "pending") {
-          pendingSchoolId = selectedSchool.id;
-        } else if (selectedSchool.type === "new") {
-          // Create a new pending school
+        if (selectedSchool.isNew) {
+          // Add to public school directory first
+          await supabase
+            .from("school_directory")
+            .upsert({ school_name: selectedSchool.name }, { onConflict: "school_name" });
+
+          // Create a new pending school for this corporate
           const { data: newPendingSchool, error: pendingError } = await supabase
             .from("pending_schools")
             .insert({
@@ -187,9 +188,49 @@ export default function MentorSignup() {
 
           if (pendingError) {
             console.error("Error creating pending school:", pendingError);
-            // Don't fail the whole signup for this
           } else {
             pendingSchoolId = newPendingSchool.id;
+          }
+        }
+        // For existing schools from directory, we still create a pending_school record
+        // since mentor_profiles links to pending_schools, not school_directory
+        else {
+          // Check if this school already exists as pending for this corporate
+          const { data: existingPending } = await supabase
+            .from("pending_schools")
+            .select("id")
+            .eq("school_name", selectedSchool.name)
+            .eq("corporate_id", corporateId)
+            .maybeSingle();
+
+          if (existingPending) {
+            pendingSchoolId = existingPending.id;
+          } else {
+            // Check if registered
+            const { data: existingRegistered } = await supabase
+              .from("school_profiles")
+              .select("id")
+              .eq("school_name", selectedSchool.name)
+              .eq("corporate_id", corporateId)
+              .maybeSingle();
+
+            if (existingRegistered) {
+              schoolId = existingRegistered.id;
+            } else {
+              // Create pending school for this corporate
+              const { data: newPending } = await supabase
+                .from("pending_schools")
+                .insert({
+                  school_name: selectedSchool.name,
+                  corporate_id: corporateId,
+                })
+                .select("id")
+                .single();
+              
+              if (newPending) {
+                pendingSchoolId = newPending.id;
+              }
+            }
           }
         }
       }
@@ -450,7 +491,6 @@ export default function MentorSignup() {
                         Associated School <span className="text-muted-foreground text-xs">(optional)</span>
                       </Label>
                       <SchoolCombobox
-                        corporateId={corporateId || ""}
                         value={selectedSchool?.name || ""}
                         onSelect={(school) => {
                           setSelectedSchool(school);
