@@ -37,15 +37,13 @@ export function VideoExplainer() {
           <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden border border-border/50 shadow-lg">
             {!isPlaying ? (
               <>
-                {/* Thumbnail Placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-32 h-32 rounded-full bg-muted/80 mx-auto mb-4 flex items-center justify-center border-2 border-dashed border-border">
-                      <span className="text-sm text-muted-foreground">Founder Photo</span>
-                    </div>
-                    <p className="text-muted-foreground text-sm">Video thumbnail placeholder</p>
-                  </div>
-                </div>
+                {/* Thumbnail */}
+                <img
+                  src="https://images.unsplash.com/photo-1531498860502-7c67cf02f657?auto=format&fit=crop&w=1200&q=80"
+                  alt="Diverse group of professionals and students in a STEM mentoring session"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
                 {/* Play Button Overlay */}
                 <button

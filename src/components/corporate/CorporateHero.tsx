@@ -41,15 +41,28 @@ export function CorporateHero({ onScrollToForm }: CorporateHeroProps) {
             </div>
           </div>
 
-          {/* Right - Hero Image Placeholder */}
+          {/* Right - Hero Image */}
           <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl border border-border/50 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="w-24 h-24 rounded-full bg-muted/80 mx-auto mb-4 flex items-center justify-center border-2 border-dashed border-border">
-                  <Building2 className="w-10 h-10 text-muted-foreground" />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+                alt="Diverse professionals collaborating in a modern corporate environment"
+                className="w-full h-[400px] md:h-[500px] object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+            </div>
+
+            {/* Floating card */}
+            <div className="absolute -bottom-6 -left-6 bg-card p-4 rounded-xl shadow-lg border border-border">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Building2 className="w-6 h-6 text-primary" />
                 </div>
-                <p className="text-muted-foreground text-sm">Hero Image Placeholder</p>
-                <p className="text-xs text-muted-foreground/70 mt-1">Diverse professionals mentoring student</p>
+                <div>
+                  <p className="font-semibold text-foreground">ESG Impact</p>
+                  <p className="text-sm text-muted-foreground">Measurable outcomes</p>
+                </div>
               </div>
             </div>
           </div>
