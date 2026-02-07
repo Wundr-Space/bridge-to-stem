@@ -24,7 +24,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/bridge-to-stem">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/for-corporates" element={<ForCorporates />} />
