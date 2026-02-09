@@ -111,7 +111,7 @@ And beyond that "a match making platform" to help us match identify opportunitie
 #### Secondary Customer Segment B: Alumni (STEM Professionals)
 
 **Key traits:**
-- Age 25-55, attended public schools, now working in STEM/tech
+- Age 25-55, attended state schools, now working in STEM/tech
 - From working-class or low SES backgrounds originally
 - Successful, but remember struggling with career decisions/lack of guidance at pivotal times in their life
 - Time-constrained (work/family commitments) but motivated by social impact
@@ -148,7 +148,7 @@ And beyond that "a match making platform" to help us match identify opportunitie
 
 #### For Schools (Secondary Customer):
 
-**Alumni Engagement Gap:** Public schools lack the infrastructure to engage former students as role models, unlike private schools with dedicated alumni relations. This perpetuates inequality - working-class students don't see "people like them" succeed.
+**Alumni Engagement Gap:** State schools lack the infrastructure to engage former students as role models, unlike private schools with dedicated alumni relations. This perpetuates inequality - working-class students don't see "people like them" succeed.
 
 **Work Experience Quality Gap:** Schools struggle to find quality STEM work placements. Students default to local shops, hairdressers, family connections - missing exposure to professional careers entirely.
 
@@ -259,7 +259,7 @@ Our solution is for **public secondary schools** who lack access to STEM employe
 
 1. **Corporate Partnership Program:** We activate diverse employees at major STEM companies as mentors and handle all work placement logistics (safeguarding, DBS, insurance) while providing measurable ESG/D&I impact data.
 
-2. **School Network Program:** Public schools get free access to corporate mentors and quality STEM work placements with zero administrative burden, addressing OFSTED community engagement needs.
+2. **School Network Program:** State schools get free access to corporate mentors and quality STEM work placements with zero administrative burden, addressing OFSTED community engagement needs.
 
 3. **Student Experience Journey:** Students receive a 2-week work placement with a relatable mentor from similar background, with optional ongoing support through A-Levels and university applications.
 

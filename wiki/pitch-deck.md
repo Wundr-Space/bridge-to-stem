@@ -526,7 +526,7 @@ Corporate Partner → Identify Diverse Employees (ERGs, D&I networks)
 - **UK tech workforce diversity improves:** 9% → 15%+ low-SES representation
 - **Social mobility accelerates:** Gen-Connect placements become standard corporate D&I practice
 - **Proof of concept for "relatability model":** Other sectors replicate (law, medicine, finance)
-- **Public schools competitive with private schools:** Alumni engagement no longer a privilege
+- **State schools competitive with private schools:** Alumni engagement no longer a privilege
 
 **Corporate Impact (ESG Leadership):**
 - **Social Mobility Index rankings:** Companies using Gen-Connect rise in rankings
