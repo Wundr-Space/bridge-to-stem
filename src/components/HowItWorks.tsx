@@ -21,7 +21,7 @@ const steps = [
     id: 3,
     icon: School,
     title: "Schools Connect Students",
-    description: "Public schools nominate students who benefit from relatable STEM role models",
+    description: "State schools nominate students who benefit from relatable STEM role models",
     audiences: ["schools", "students"]
   },
   {

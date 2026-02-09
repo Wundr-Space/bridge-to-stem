@@ -1,4 +1,4 @@
--- Create a public school directory for lookup during signup
+-- Create a state school directory for lookup during signup
 CREATE TABLE public.school_directory (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   school_name TEXT NOT NULL UNIQUE,

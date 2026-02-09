@@ -2,7 +2,7 @@
 
 ## Overview
 
-Gen-Connect operates as a five-step ecosystem that connects major STEM companies, their diverse employees, public schools, and students from underrepresented backgrounds. Our platform handles all operational complexity to deliver authentic social mobility impact with zero burden on schools.
+Gen-Connect operates as a five-step ecosystem that connects major STEM companies, their diverse employees, state schools, and students from underrepresented backgrounds. Our platform handles all operational complexity to deliver authentic social mobility impact with zero burden on schools.
 
 ---
 

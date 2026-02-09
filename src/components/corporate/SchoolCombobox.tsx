@@ -42,7 +42,7 @@ export function SchoolCombobox({ value, onSelect, disabled, error }: SchoolCombo
   const fetchSchools = async () => {
     setIsLoading(true);
     try {
-      // Fetch from the public school directory
+      // Fetch from the state school directory
       const { data: schoolData } = await supabase
         .from("school_directory")
         .select("id, school_name")

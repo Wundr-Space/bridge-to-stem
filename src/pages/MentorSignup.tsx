@@ -171,7 +171,7 @@ export default function MentorSignup() {
 
       if (selectedSchool) {
         if (selectedSchool.isNew) {
-          // Add to public school directory first
+          // Add to state school directory first
           await supabase
             .from("school_directory")
             .upsert({ school_name: selectedSchool.name }, { onConflict: "school_name" });

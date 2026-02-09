@@ -77,7 +77,7 @@ export function HeroSection() {
             </p>
 
             <p className="text-base text-muted-foreground/80 max-w-lg mx-auto lg:mx-0">
-              Bridging the gap between major tech companies, public schools, STEM professionals, and students who need to see 'someone like me' succeed.
+              Bridging the gap between major tech companies, state schools, STEM professionals, and students who need to see 'someone like me' succeed.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
